@@ -1,4 +1,4 @@
-# code/00_load_data.R
+# 00_load_data.R
 # Reads both datasets and sets variable types. Source this at the top of every
 # other script with: source("code/00_load_data.R")
 
