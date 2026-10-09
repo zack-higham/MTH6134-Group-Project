@@ -1,4 +1,4 @@
-# code/01_explore.R — Week 2: read in, summarise and plot both datasets
+# 01_explore.R — Week 2: read in, summarise and plot both datasets
 source("code/00_load_data.R")
 
 # ---- Structure and summaries ----
