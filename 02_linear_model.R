@@ -1,4 +1,4 @@
-# 02_linear_model.R — Week 2: normal linear regression for a continuous outcome
+# code/02_linear_model.R — Week 2: normal linear regression for a continuous outcome
 source("code/00_load_data.R")
 
 # Response: minutes_played (continuous, but capped at 3960 - note this)
