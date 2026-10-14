@@ -62,8 +62,11 @@ write.csv(round(or_tab, 3), "outputs/injury_final_odds_ratios.csv")
 # distinguish a real position effect from chance.
 # training_load (p = 0.24) and prev_injuries (p = 0.77) are adequately
 # modelled as numeric; the factor versions do not improve the fit.
-# Holding the other variables fixed, each additional previous injury is
-# associated with the odds of injury being multiplied by about 1.67
-# (95% CI 1.40 to 1.99).
+# Holding the other variables fixed, each additional previous injury
+# is associated with the odds of injury being multiplied by 1.67 (95% CI 1.40
+# to 2.00). Each extra point of training load is associated with the odds
+# being multiplied by 1.38 (95% CI 1.11 to 1.71), and each additional year of
+# age with the odds being multiplied by 1.11 (95% CI 1.05 to 1.18).
+
 
 Add Person 2 injury model selection
