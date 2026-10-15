@@ -44,7 +44,6 @@ All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selecti
 | `04e_ashford_wins_and_predictions.R` | 4 | Ashford win model, predicted-probability plots |
 | `run_all.R` (project root) | — | Runs all scripts in order and reports failures |
 | `drafts/02_linear_model_draft.R` | 2 | Vish's first version of the week 2 linear model (kept; not run by `run_all.R`) |
-| `drafts/test2.R` | — | Test file (kept; not run by `run_all.R`) |
 
 ## Weekly progress
 - [x] Week 2 — Exploration + normal linear regression

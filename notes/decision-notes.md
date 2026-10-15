@@ -203,7 +203,6 @@ file was deleted and no file's content was changed except where noted.
 | Old name | New name | Why |
 |---|---|---|
 | `code/Normal linear regression (week 2&3).R` | `code/drafts/02_linear_model_draft.R` | Spaces and brackets in the name; it is a draft of `02_linear_model.R` |
-| `code/test2.R` | `code/drafts/test2.R` | Test file, not part of the analysis |
 | `outputs/Plot of lm1 (mins played = pos + age + training+ bmi + prev_injuries).png` | `outputs/lm1_residuals_vs_fitted.png` | Spaces and symbols in the name; it is the lm1 residuals vs fitted plot |
 | `outputs/drop1_results.csv` | `outputs/lm1_drop1_results.csv` | Name didn't say which model; matches the other `lm1_*` outputs |
 
@@ -219,8 +218,10 @@ name; they were left as written.
 - `03a_variable_roles.R`: header comment corrected from `03_variable_roles.R`
   to the file's actual name.
 
-**Alternatives considered:** deleting the test file (rejected: the brief says
-keep everything), and moving Vish's draft into `02_linear_model.R` (left for
+**Test file:** `code/test2.R` contained only a comment (`#hi zack`) and no
+analysis code, so it was deleted rather than kept.
+
+**Alternatives considered:** moving Vish's draft into `02_linear_model.R` (left for
 Vish, since it is his work and needs edits to run).
 
 **Outputs committed:** after the fixes, every numbered script was run from a
