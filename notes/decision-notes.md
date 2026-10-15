@@ -127,6 +127,71 @@ to be compared in `04c`.
 - [ ] prev_injuries numeric vs factor (`04b`, Liha)
 - [ ] Extensions kept or rejected: age², interactions, log(minutes), link function (`04c`, Vish)
 - [ ] Team effect: likelihood ratio test result, and note for week 11 GLMM (`04d`, Liri)
-- [ ] Ashford win model results and small-sample caveat (`04e`, Zack)
+- [x] Ashford win model results and small-sample caveat (`04e`, Zack)
 
 (Add reasoning here.)
+
+### 15/10/2026 — Ashford win model (Zack, `04e`)
+**Model:** `win ~ home_away + opponent_rank`, binomial GLM with logit link, where
+`win = (result == "W")`. A binomial GLM suits a 0/1 response because it keeps
+fitted probabilities in (0, 1); the logit link gives odds ratios.
+
+| Term | Odds ratio | 95% CI | LRT (1 df) | p |
+|---|---|---|---|---|
+| Away (vs Home) | 0.20 | 0.05 to 0.72 | 6.15 | 0.013 |
+| Opponent rank (+1 place) | 1.09 | 1.00 to 1.21 | 3.58 | 0.059 |
+
+CIs are profile-likelihood intervals on the log-odds scale, exponentiated.
+
+- Holding opponent rank fixed, playing away is associated with the odds of an
+  Ashford win being multiplied by about 0.20 (95% CI 0.05 to 0.72). The LRT
+  rejects removing home_away at the 5% level (p = 0.013), so we keep it.
+- Holding venue fixed, each place lower the opponent finished is associated with
+  the odds of winning being multiplied by about 1.09 (95% CI 1.00 to 1.21).
+  The LRT gives p = 0.059, so there is only weak evidence for this term at the
+  5% level. Across the whole table (rank 1 to 24) that is an odds ratio of
+  about 1.09^23 ≈ 7.6.
+- **Decision:** keep both terms for now. opponent_rank is borderline on the LRT,
+  but AIC prefers keeping it (60.4 with it vs 62.0 without), it is the obvious
+  measure of opposition strength, and it is clearly associated with goals
+  scored and conceded (week 2). Alternative considered: home_away only.
+
+**Caveats:**
+- Only 46 matches and 22 wins, so the intervals are wide.
+- The data are paired: each opponent is played twice, home and away. The
+  model treats the 46 matches as independent, which ignores this.
+- `win` collapses draws and losses together. The ordinal model (week 10) uses
+  the full W/D/L outcome.
+- Ashford's own rank is absent from opponent_rank (they finished 9th, so no
+  opponent has rank 9).
+
+**Goodness of fit:** the response is 0/1, so residual deviance (54.4 on 43 df) is
+not a goodness-of-fit test. Instead, matches were grouped by venue and opponent
+rank band (1–8, 9–16, 17–24; the middle band is effectively 10–16). Observed and
+fitted win proportions agree closely in all six cells. Every Pearson residual
+is within ±0.8 and none exceeds 2. Pearson X² = 1.19 over the six cells. With
+only 7–8 matches per cell this is descriptive, not a formal test.
+Table: `outputs/win_grouped_check.csv`.
+
+**Outputs:** `win_odds_ratios.csv`, `win_drop1_lrt.csv`, `win_grouped_check.csv`,
+`win_predicted_probabilities.csv`, `win_prob_by_rank.png`.
+
+### 15/10/2026 — Predicted injury probability plot (Zack, `04e`)
+- Uses Liha's final injury model from `04b`: `injured ~ age + training_load + prev_injuries`.
+- Predicted probability plotted against prev_injuries (0–4) for each training
+  load (1–5), at the median age (25).
+- Example: a 25-year-old with no previous injuries on load 1 has a predicted
+  injury probability of 0.06 (95% CI 0.03 to 0.10). With 4 previous injuries on
+  load 5 it is 0.62 (95% CI 0.46 to 0.76).
+- Only 21 players have 4 previous injuries, so the right-hand end of the plot is
+  the least certain.
+- 95% bands were computed on the log-odds scale with `predict(se.fit = TRUE)` and
+  transformed with `plogis()`, so they stay within (0, 1).
+
+**Outputs:** `injury_predicted_probabilities.csv`, `injury_prob_by_prev_injuries.png`.
+
+### 15/10/2026 — Workspace: run_all.R (Zack)
+Added `run_all.R`. It runs every numbered script in `code/` in order, each in
+its own environment, and reports any that fail. Un-numbered drafts in `code/`
+are kept but skipped. Use it from a fresh R session before
+each lecturer check.

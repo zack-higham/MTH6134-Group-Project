@@ -1,6 +1,6 @@
 # MTH6134 Group Project — Progress and Status
 
-*Last updated: 12/10/2026*
+*Last updated: 15/10/2026*
 
 ## Group (5)
 
@@ -20,6 +20,7 @@ All folder and file names are lowercase. Paths are case-sensitive on GitHub and 
 README.md
 .gitignore
 MTH6134-project.Rproj
+run_all.R    runs every script in code/ in order and reports failures
 code/        numbered R scripts; each starts with source("code/00_load_data.R")
 data/        league_players.csv, ashford_matches.csv
 outputs/     plots (.png) and tables (.csv) saved by the scripts
@@ -27,7 +28,7 @@ notes/       decision-notes.md, who-did-what.md
 reports/     final group + individual reports (later)
 ```
 
-- All code uses base R only and relative paths. Open the `.Rproj` before running anything.
+- All code uses base R and relative paths, except `01b` and `04b`, which load the tidyverse. Open the `.Rproj` before running anything.
 - `00_load_data.R` reads both CSVs. It sets `position` (GK baseline) and `home_away` (Home baseline) as factors, and adds `training_load_f` (ordered factor), `goal_diff`, and `result` (ordered L < D < W).
 
 ## Scripts
@@ -38,14 +39,15 @@ reports/     final group + individual reports (later)
 | `01_explore.R` | 2 | Zack | Kept (original combined exploration, split into 01a/01b) |
 | `01a_explore_players.R` | 2 | Yousuf | Done |
 | `01b_explore_matches.R` | 2 | Liha | Done |
-| `02_linear_model.R` | 2 | Vish | Done |
+| `02_linear_model.R` | 2 | Vish | TODOs left (model selection, factor comparison) |
 | `03a_variable_roles.R` | 3 | Liri | Done |
 | `03b_lm_vs_glm.R` | 3 | Zack | Done |
 | `04a_injury_logistic.R` | 4 | Yousuf | In progress |
-| `04b_injury_model_selection.R` | 4 | Liha | In progress |
+| `04b_injury_model_selection.R` | 4 | Liha | Done (line 72 needs deleting; decision-notes and who-did-what entries still to add) |
 | `04c_injury_extensions.R` | 4 | Vish | In progress |
 | `04d_grouped_binomial.R` | 4 | Liri | In progress |
-| `04e_ashford_wins_and_predictions.R` | 4 | Zack | In progress |
+| `04e_ashford_wins_and_predictions.R` | 4 | Zack | Done |
+| `run_all.R` | — | Zack | Done |
 
 ---
 
@@ -109,10 +111,11 @@ reports/     final group + individual reports (later)
 - **Yousuf, `04a`:** full logistic model,
   `injured ~ position + age + minutes_played + training_load + prev_injuries + bmi`.
   Odds ratios with 95% CIs, and interpretation of each term.
-- **Liha, `04b`:** model selection.
-  - `drop1` / `anova(test = "Chisq")`, AIC and `step()`.
-  - Numeric vs factor for training_load and prev_injuries.
-  - Produces the **final injury model**. Needed first, because week 5 builds on it.
+- **Liha, `04b` — DONE 14/10/2026:**
+  - **Final injury model: `injured ~ age + training_load + prev_injuries`.** Backward elimination by LRT and `step()` by AIC agree.
+  - Dropped: minutes (p = 0.96), bmi (p = 0.58), position (p = 0.43 when dropped).
+  - training_load and prev_injuries kept numeric; the factor versions don't improve the fit (p = 0.24 and p = 0.77).
+  - ORs: prev_injuries 1.67 (95% CI 1.40–2.00), training_load 1.38 (1.11–1.71), age 1.11 (1.05–1.18) per year.
 - **Vish, `04c`:** extensions.
   - age².
   - Interactions: `training_load:prev_injuries` and `position:training_load`.
@@ -123,10 +126,15 @@ reports/     final group + individual reports (later)
   - Likelihood ratio test for team as a fixed effect.
   - Position-level grouped model.
   - Note for the week 11 GLMM.
-- **Zack, `04e`:**
-  - `win ~ home_away + opponent_rank`. Ashford won 22/46, so note the small-sample caveat.
-  - Predicted-probability plots for wins, and for injury from Liha's final model.
-  - Workspace upkeep.
+- **Zack, `04e` — DONE 15/10/2026:**
+  - `win ~ home_away + opponent_rank` (22/46 wins).
+    - Away v home: OR 0.20 (95% CI 0.05–0.72), LRT p = 0.013.
+    - Opponent rank: OR 1.09 per place (95% CI 1.00–1.21), LRT p = 0.059. Weak evidence; kept on AIC and context.
+    - Grouped check (venue × rank band, 6 cells): observed and fitted win proportions agree, all |Pearson residual| < 0.8.
+    - Caveats: small sample, paired by opponent, draws and losses combined.
+  - Predicted win-probability plot with 95% bands.
+  - Predicted injury-probability plot from Liha's final model.
+  - Workspace: `run_all.R` added; README updated (weeks 2–3 ticked, tidyverse note, all scripts listed); `outputs/README.md` now lists every output by script.
 
 ---
 
@@ -136,6 +144,8 @@ reports/     final group + individual reports (later)
   - Influence of the 8–0 match.
   - Diagnostics on the final injury model.
   - Deviance is not a goodness-of-fit test for 0/1 data.
+  - `04b` line 72 contains a stray line of text ("Add Person 2 injury model selection"), so the script stops with an error (Liha to delete).
+  - `code/` holds two un-numbered files, `Normal linear regression (week 2&3).R` and `test2.R`. `run_all.R` skips them. The first uses `setwd()` with a personal OneDrive path and `league_players`, so it won't run for anyone else. Keep it (never delete code), but its owner should note in decision-notes that `02_linear_model.R` supersedes it.
 - **Week 6:** Poisson for goals scored/conceded. Plain Poisson looks adequate after adjusting for home_away and opponent_rank.
 - **Week 11:** variation in injury rates between teams suggests a random team effect.
 
@@ -144,4 +154,4 @@ reports/     final group + individual reports (later)
 - Each person works only in their own script and commits under their own GitHub account.
 - Never delete exploratory code. Superseded scripts are kept and the change is noted in decision-notes.
 - Log every decision, with its date, in `notes/decision-notes.md`. Add a row per task to `notes/who-did-what.md`.
-- Before each lecturer check (weeks 5, 8, 11): restart R and run all scripts in order to check they still work.
+- Before each lecturer check (weeks 5, 8, 11): restart R and run `source("run_all.R")` to check everything still works.
