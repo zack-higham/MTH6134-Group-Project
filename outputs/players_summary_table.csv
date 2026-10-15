@@ -1,0 +1,6 @@
+"Variable","Mean","SD","Median","Min","Max"
+"age",25.06,3.87,25,17,36
+"minutes_played",2540.27,710.04,2544,105,3960
+"training_load",3.2,1.01,3,1,5
+"prev_injuries",0.9,1.08,1,0,4
+"bmi",23.52,1.51,23.6,19,27.9

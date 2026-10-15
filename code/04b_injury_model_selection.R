@@ -69,4 +69,3 @@ write.csv(round(or_tab, 3), "outputs/injury_final_odds_ratios.csv")
 # age with the odds being multiplied by 1.11 (95% CI 1.05 to 1.18).
 
 
-Add Person 2 injury model selection

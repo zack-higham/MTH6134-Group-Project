@@ -1,4 +1,4 @@
-# 03_variable_roles.R — Week 3: introduction to GLMs
+# 03a_variable_roles.R — Week 3: introduction to GLMs
 # Which variables are natural responses, which are explanatory, and what type
 # of outcome is each response? Summary table is in notes/decision-notes.md.
 source("code/00_load_data.R")

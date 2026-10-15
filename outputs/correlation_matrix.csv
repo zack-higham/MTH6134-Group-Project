@@ -1,0 +1,6 @@
+"","age","minutes_played","training_load","prev_injuries","bmi"
+"age",1,-0.02,0.06,0.01,-0.02
+"minutes_played",-0.02,1,0.21,0,-0.02
+"training_load",0.06,0.21,1,0.06,-0.04
+"prev_injuries",0.01,0,0.06,1,0.01
+"bmi",-0.02,-0.02,-0.04,0.01,1

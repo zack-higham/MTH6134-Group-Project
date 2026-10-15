@@ -25,7 +25,7 @@ Analysis of the fictional Midland Premier League 2023/24 season.
 
 All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selection.R`, which load the tidyverse (`install.packages("tidyverse")` once before running them).
 
-`run_all.R` only runs the numbered scripts. Other files in `code/` (rough drafts) are kept but not run.
+`run_all.R` only runs the numbered scripts in `code/`. Rough drafts are kept in `code/drafts/` and are not run.
 
 ## Scripts
 | Script | Week | Purpose |
@@ -43,8 +43,8 @@ All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selecti
 | `04d_grouped_binomial.R` | 4 | Grouped binomial, goodness of fit, team effect |
 | `04e_ashford_wins_and_predictions.R` | 4 | Ashford win model, predicted-probability plots |
 | `run_all.R` (project root) | — | Runs all scripts in order and reports failures |
-| `Normal linear regression (week 2&3).R` | 2 | Rough draft of `02` (kept; not run by `run_all.R`) |
-| `test2.R` | — | Test file (kept; not run by `run_all.R`) |
+| `drafts/02_linear_model_draft.R` | 2 | Vish's first version of the week 2 linear model (kept; not run by `run_all.R`) |
+| `drafts/test2.R` | — | Test file (kept; not run by `run_all.R`) |
 
 ## Weekly progress
 - [x] Week 2 — Exploration + normal linear regression

@@ -1,0 +1,7 @@
+"home_away","opponent_rank","lm_pred","glm_pred"
+"Home",1,0.95,0.86
+"Away",1,0.08,0.43
+"Home",12,1.69,1.56
+"Away",12,0.83,0.78
+"Home",24,2.51,3
+"Away",24,1.64,1.5

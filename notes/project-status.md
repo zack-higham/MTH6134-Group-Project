@@ -1,6 +1,6 @@
 # MTH6134 Group Project — Progress and Status
 
-*Last updated: 15/10/2026*
+*Last updated: 15/10/2026 (tidy-up)*
 
 ## Group (5)
 
@@ -20,8 +20,9 @@ All folder and file names are lowercase. Paths are case-sensitive on GitHub and 
 README.md
 .gitignore
 MTH6134-project.Rproj
-run_all.R    runs every script in code/ in order and reports failures
+run_all.R    runs every numbered script in code/ in order and reports failures
 code/        numbered R scripts; each starts with source("code/00_load_data.R")
+code/drafts/ rough drafts and test files (kept, not run)
 data/        league_players.csv, ashford_matches.csv
 outputs/     plots (.png) and tables (.csv) saved by the scripts
 notes/       decision-notes.md, who-did-what.md
@@ -43,7 +44,7 @@ reports/     final group + individual reports (later)
 | `03a_variable_roles.R` | 3 | Liri | Done |
 | `03b_lm_vs_glm.R` | 3 | Zack | Done |
 | `04a_injury_logistic.R` | 4 | Yousuf | In progress |
-| `04b_injury_model_selection.R` | 4 | Liha | Done (line 72 needs deleting; decision-notes and who-did-what entries still to add) |
+| `04b_injury_model_selection.R` | 4 | Liha | Done (decision-notes and who-did-what entries still to add) |
 | `04c_injury_extensions.R` | 4 | Vish | In progress |
 | `04d_grouped_binomial.R` | 4 | Liri | In progress |
 | `04e_ashford_wins_and_predictions.R` | 4 | Zack | Done |
@@ -135,6 +136,7 @@ reports/     final group + individual reports (later)
   - Predicted win-probability plot with 95% bands.
   - Predicted injury-probability plot from Liha's final model.
   - Workspace: `run_all.R` added; README updated (weeks 2–3 ticked, tidyverse note, all scripts listed); `outputs/README.md` now lists every output by script.
+  - Tidy-up: misnamed files renamed (see decision-notes, 15/10/2026); all numbered scripts run cleanly from a fresh session; all script outputs committed.
 
 ---
 
@@ -144,8 +146,8 @@ reports/     final group + individual reports (later)
   - Influence of the 8–0 match.
   - Diagnostics on the final injury model.
   - Deviance is not a goodness-of-fit test for 0/1 data.
-  - `04b` line 72 contains a stray line of text ("Add Person 2 injury model selection"), so the script stops with an error (Liha to delete).
-  - `code/` holds two un-numbered files, `Normal linear regression (week 2&3).R` and `test2.R`. `run_all.R` skips them. The first uses `setwd()` with a personal OneDrive path and `league_players`, so it won't run for anyone else. Keep it (never delete code), but its owner should note in decision-notes that `02_linear_model.R` supersedes it.
+  - Vish: his week 2 work (model selection, numeric vs factor training_load, bmi response) is in `code/drafts/02_linear_model_draft.R`, not in `02_linear_model.R`, which is still the starter with TODOs. The draft uses `setwd()` with a personal OneDrive path and `league_players`, so it won't run for anyone else. Move the work into `02_linear_model.R` (as the week 4 email asks).
+  - Liha: add decision-notes and who-did-what entries for `04b`.
 - **Week 6:** Poisson for goals scored/conceded. Plain Poisson looks adequate after adjusting for home_away and opponent_rank.
 - **Week 11:** variation in injury rates between teams suggests a random team effect.
 

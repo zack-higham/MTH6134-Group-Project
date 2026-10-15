@@ -44,12 +44,12 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 |---|---|
 | `lm1_residuals.png` | Residual plots for `minutes_played ~ position + age + training_load + bmi + prev_injuries` |
 
-**`Normal linear regression (week 2&3).R`** (Vish; rough draft of `02`, kept, not run by `run_all.R`)
+**`drafts/02_linear_model_draft.R`** (Vish; first version of `02`, kept, not run by `run_all.R`). These were saved by hand while the draft's `write.csv` lines were commented out, so no script recreates them.
 | File | Contents |
 |---|---|
-| `lm1_coefficients.csv` | Coefficients, SEs, t values, p-values and 95% CIs for the linear model |
-| `drop1_results.csv` | F-test `drop1` results for the linear model |
-| `Plot of lm1 (mins played = pos + age + training+ bmi + prev_injuries).png` | Linear model plot *(not script-generated: saved by hand)* |
+| `lm1_coefficients.csv` | Coefficients, SEs, t values, p-values and 95% CIs for the linear model *(not script-generated)* |
+| `lm1_drop1_results.csv` | F-test `drop1` results for the linear model *(not script-generated; renamed from `drop1_results.csv`)* |
+| `lm1_residuals_vs_fitted.png` | Residuals vs fitted for the linear model *(not script-generated; renamed from `Plot of lm1 (mins played = pos + age + training+ bmi + prev_injuries).png`)* |
 
 ## Week 3 — GLMs
 
