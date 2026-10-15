@@ -228,3 +228,32 @@ Vish, since it is his work and needs edits to run).
 fresh session and the 25 outputs that existed only locally were committed, so
 `outputs/` now matches `outputs/README.md`.
 
+### 15/10/2026 — `02_linear_model.R`: Vish's work moved into place (edit by Zack)
+**This is an edit, not new analysis. The model, the tests, the comments and
+the conclusions are all Vish's.**
+
+**What:** Vish's week 2 analysis was in his own file (now
+`code/drafts/02_linear_model_draft.R`), while `02_linear_model.R` was still the
+starter template. His code was copied into `02_linear_model.R` with only these
+changes, so it runs from the project folder:
+- added `source("code/00_load_data.R")` and used `players` instead of
+  `league_players`;
+- removed `setwd()` with a personal OneDrive path;
+- un-commented his two `write.csv` lines, saving the drop1 table as
+  `lm1_drop1_results.csv`;
+- added a note that the scripts use GK as the baseline position (his comment
+  says defender), and a TODO for the empty bmi section. Both are marked [Zack].
+
+**Kept, not deleted:** his original file (unchanged) and the old starter, both
+in `code/drafts/`. His hand-edited coefficient table, which includes his written
+interpretation of every term, was renamed `lm1_coefficients_annotated.csv` so
+the script's plain table (`lm1_coefficients.csv`, the name in the week 2
+instructions) doesn't overwrite it.
+
+**Why:** the brief requires everything to run from the folder as submitted, and
+the week 4 email asked for these TODOs to be finished.
+
+**Note for the report:** his annotated table uses defenders as the baseline;
+the scripts use goalkeepers. The fitted model is the same and the numbers agree
+once the baseline is accounted for (GK +580 vs DEF matches DEF −580 vs GK).
+

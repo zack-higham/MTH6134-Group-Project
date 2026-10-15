@@ -1,18 +1,9 @@
-,Estimate,Std.Error,t_value,p_value,CI_lower,CI_upper,,
-(Intercept),2190.49,424.98,5.15,0.000000344,1355.9,3025.08,,Being a forward (compared to a defender) is associated with an expected decrease of approximately $621.59$ minutes played over the season
-positionFWD,-621.59,66.45,-9.35,0,-752.09,-491.09,,Being a goalkeeper is associated with an expected increase of approximately $580.28$ minutes played compared to defenders
-positionGK,580.28,87.72,6.62,0,408.02,752.55,,Being a midfielder is associated with an expected decrease of approximately $321.61$ minutes played compared to defenders
-positionMID,-321.61,59.08,-5.44,0.000000076,-437.63,-205.59,,Each additional year of age is associated with an expected decrease of $1.47$ minutes played
-age,-1.47,6.31,-0.23,0.815381596,-13.87,10.93,,A one-unit increase in weekly training load intensity is associated with an expected increase of $145.11$ minutes played
-training_load,145.11,24.42,5.94,0.000000005,97.15,193.07,,A one-unit increase in body mass index is associated with an expected increase of $5.10$ minutes played
-bmi,5.1,16.2,0.31,0.752984248,-26.71,36.91,,Each prior injury in the past three seasons is associated with an expected decrease of $13.95$ minutes played
-prev_injuries,-13.95,22.51,-0.62,0.535607058,-58.16,30.25,,
-,,,,,,,,
-,,,,,,,,
-Multiple R-squared:  0.2807,,,,,,,,
-"Multiple R squared is low hence variables are not strongly correlated, this model may not be a great fit. ",,,,,,,,
-AIC = 9713.208,,,,,,,,
-AIC is high hence model is not a good fit.,,,,,,,,
-,,,,,,,,
-Treating training load as a factor:,,,,,,,,
-p value = 0.7313 hence insufficient evidence that treating training load as a factor is beneficial. Numeric assumption is adequate.,,,,,,,,
+"","Estimate","Std.Error","t_value","p_value","CI_lower","CI_upper"
+"(Intercept)",2770.77032986963,427.913551005788,6.47507031118103,1.94628012944481e-10,1930.41324768484,3611.12741205441
+"positionDEF",-580.282395870283,87.7169978351608,-6.61539279947495,8.09311903264192e-11,-752.545228364147,-408.019563376419
+"positionMID",-901.889950972677,88.0165529206626,-10.2468220016027,7.56989093609447e-23,-1074.7410640597,-729.038837885655
+"positionFWD",-1201.87219964402,93.191828884418,-12.896755155805,7.78711919365034e-34,-1384.88676700394,-1018.85763228409
+"age",-1.47490836992795,6.31409709405837,-0.233589751306779,0.815381596342246,-13.8748340047264,10.9250172648705
+"training_load",145.108974768013,24.4232444518048,5.94142907812111,4.74295403075616e-09,97.1454400849837,193.072509451042
+"bmi",5.09938720704164,16.1963372944688,0.314848173036204,0.7529842477344,-26.707754022464,36.9065284365473
+"prev_injuries",-13.9522507952508,22.5101689938321,-0.619819904465123,0.535607058164452,-58.158796464769,30.2542948742674

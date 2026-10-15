@@ -34,7 +34,7 @@ All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selecti
 | `01_explore.R` | 2 | Original combined exploration (kept; superseded by 01a/01b) |
 | `01a_explore_players.R` | 2 | Players dataset exploration |
 | `01b_explore_matches.R` | 2 | Ashford matches exploration (tidyverse) |
-| `02_linear_model.R` | 2 | Normal linear regression |
+| `02_linear_model.R` | 2 | Normal linear regression (Vish) |
 | `03a_variable_roles.R` | 3 | Responses vs explanatory variables |
 | `03b_lm_vs_glm.R` | 3 | Why linear models fail for counts/binary; first GLMs |
 | `04a_injury_logistic.R` | 4 | Full logistic model for injury, odds ratios |
@@ -43,7 +43,8 @@ All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selecti
 | `04d_grouped_binomial.R` | 4 | Grouped binomial, goodness of fit, team effect |
 | `04e_ashford_wins_and_predictions.R` | 4 | Ashford win model, predicted-probability plots |
 | `run_all.R` (project root) | — | Runs all scripts in order and reports failures |
-| `drafts/02_linear_model_draft.R` | 2 | Vish's first version of the week 2 linear model (kept; not run by `run_all.R`) |
+| `drafts/02_linear_model_draft.R` | 2 | Vish's original file for the week 2 linear model, unchanged; its analysis now lives in `02_linear_model.R` (kept; not run) |
+| `drafts/02_linear_model_starter.R` | 2 | The original starter template for `02_linear_model.R` (kept; not run) |
 
 ## Weekly progress
 - [x] Week 2 — Exploration + normal linear regression

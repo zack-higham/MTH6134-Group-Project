@@ -40,7 +40,7 @@ reports/     final group + individual reports (later)
 | `01_explore.R` | 2 | Zack | Kept (original combined exploration, split into 01a/01b) |
 | `01a_explore_players.R` | 2 | Yousuf | Done |
 | `01b_explore_matches.R` | 2 | Liha | Done |
-| `02_linear_model.R` | 2 | Vish | TODOs left (model selection, factor comparison) |
+| `02_linear_model.R` | 2 | Vish | Done except the bmi response (moved into place by Zack, 15/10) |
 | `03a_variable_roles.R` | 3 | Liri | Done |
 | `03b_lm_vs_glm.R` | 3 | Zack | Done |
 | `04a_injury_logistic.R` | 4 | Yousuf | In progress |
@@ -146,7 +146,7 @@ reports/     final group + individual reports (later)
   - Influence of the 8–0 match.
   - Diagnostics on the final injury model.
   - Deviance is not a goodness-of-fit test for 0/1 data.
-  - Vish: his week 2 work (model selection, numeric vs factor training_load, bmi response) is in `code/drafts/02_linear_model_draft.R`, not in `02_linear_model.R`, which is still the starter with TODOs. The draft uses `setwd()` with a personal OneDrive path and `league_players`, so it won't run for anyone else. Move the work into `02_linear_model.R` (as the week 4 email asks).
+  - Vish: his week 2 work has been moved into `02_linear_model.R` (edit by Zack, still Vish's analysis). The bmi response section is still empty. His interpretations in `outputs/lm1_coefficients_annotated.csv` use defenders as the baseline, while the scripts use GK, so the position effects need restating against GK before they go in the report.
   - Liha: add decision-notes and who-did-what entries for `04b`.
 - **Week 6:** Poisson for goals scored/conceded. Plain Poisson looks adequate after adjusting for home_away and opponent_rank.
 - **Week 11:** variation in injury rates between teams suggests a random team effect.
