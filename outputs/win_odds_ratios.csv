@@ -1,0 +1,4 @@
+"term","OR","lower_95","upper_95"
+"(Intercept)",0.648,0.15,2.658
+"home_awayAway",0.205,0.05,0.723
+"opponent_rank",1.092,0.997,1.211
