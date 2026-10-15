@@ -2,7 +2,7 @@
 # Author: Vish. The analysis and comments below are his work.
 #
 # Edit by Zack (15/10/2026): moved here from Vish's original file,
-# code/drafts/02_linear_model_draft.R (kept unchanged), so it runs from the
+# preserved unchanged in git history at commit 6fc4269 (code/drafts/), so it runs from the
 # project folder. Only the setup was changed, no analysis:
 #   - added source("code/00_load_data.R") and used `players` instead of
 #     `league_players`;

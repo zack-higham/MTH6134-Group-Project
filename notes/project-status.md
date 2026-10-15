@@ -22,7 +22,6 @@ README.md
 MTH6134-project.Rproj
 run_all.R    runs every numbered script in code/ in order and reports failures
 code/        numbered R scripts; each starts with source("code/00_load_data.R")
-code/drafts/ rough drafts (kept, not run)
 data/        league_players.csv, ashford_matches.csv
 outputs/     plots (.png) and tables (.csv) saved by the scripts
 notes/       decision-notes.md, who-did-what.md

@@ -257,3 +257,21 @@ the week 4 email asked for these TODOs to be finished.
 the scripts use goalkeepers. The fitted model is the same and the numbers agree
 once the baseline is accounted for (GK +580 vs DEF matches DEF −580 vs GK).
 
+### 15/10/2026 — `code/drafts/` removed (Zack)
+**What:** deleted the `code/drafts/` folder and its two files:
+- `02_linear_model_draft.R`: Vish's original week 2 file. All of its analysis
+  is in `02_linear_model.R` (see the entry above).
+- `02_linear_model_starter.R`: the original starter template for
+  `02_linear_model.R`, superseded by Vish's work.
+
+**Why:** keep `code/` to one script per task. Both files were fully superseded,
+and keeping a duplicate of Vish's code next to the working version risked the
+two drifting apart.
+
+**Kept:** the brief asks for all code, including discarded attempts, to be kept.
+Both files are preserved unchanged in the git history at commit `6fc4269`:
+https://github.com/zack-higham/mth6134-group-project/tree/6fc4269/code/drafts
+
+**Alternative considered:** keeping them in `code/drafts/` (the previous
+arrangement).
+
