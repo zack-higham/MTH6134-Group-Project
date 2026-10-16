@@ -59,7 +59,10 @@ mean of 1.16. Influence to be checked in week 5.
 
 **Decision:** treat `training_load` as numeric.
 **Why:** the factor version is not a significant improvement (F = 0.43 on 3 df, p = 0.73).
+
 **Alternative considered:** BMI as the response variable, factor with 5 levels (3 extra parameters).
+-There are 0 statistically significant variables when considering BMI as the response variable, p value > 0.05. 
+-Logically, injuries are a consequence of physical status hence it would be a circular model. Therefore minutes played should be the response variable, BMI is better as an explanatory variable. 
 
 **Limitation:** the ceiling at 3960 minutes (mostly goalkeepers) shows in the
 residual plots. A normal linear model doesn't respect an upper limit.
