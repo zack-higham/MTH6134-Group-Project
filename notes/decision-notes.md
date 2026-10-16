@@ -55,10 +55,11 @@ mean of 1.16. Influence to be checked in week 5.
 - Position dominates. Compared with GK: DEF −580, MID −900, FWD −1200 minutes.
 - Each extra training-load level is associated with ~145 more minutes.
 - Age, bmi and prev_injuries are not significant (p > 0.5) and are candidates to drop.
+- Injuries is not included as a predictor because an injury directly causes a drop in minutes played, distorting the data. 
 
 **Decision:** treat `training_load` as numeric.
 **Why:** the factor version is not a significant improvement (F = 0.43 on 3 df, p = 0.73).
-**Alternative considered:** factor with 5 levels (3 extra parameters).
+**Alternative considered:** BMI as the response variable, factor with 5 levels (3 extra parameters).
 
 **Limitation:** the ceiling at 3960 minutes (mostly goalkeepers) shows in the
 residual plots. A normal linear model doesn't respect an upper limit.
