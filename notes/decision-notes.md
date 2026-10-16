@@ -69,16 +69,25 @@ residual plots. A normal linear model doesn't respect an upper limit.
 
 ### Roles of variables (Liri)
 
-| Variable | Role |
-|---|---|
-| injured | Response (binary) |
-| goals_scored, goals_conceded | Responses (counts) |
-| result | Response (ordinal, derived) |
-| minutes_played | Response in week 2. Otherwise an explanatory/exposure variable for injury |
-| position, age, training_load, bmi | Explanatory |
-| prev_injuries | Explanatory: a count, but a natural predictor of `injured` rather than a response |
-| home_away, opponent_rank | Explanatory (matches) |
-| team | Grouping variable, not a standard predictor (23 dummy variables) |
+The distribution listed for a response determines the proposed model family.
+Predictors do not have to follow the response distribution; their entries below
+describe their observed data type and likely empirical distribution.
+
+| Variable | Role | Type | Likely distribution |
+|---|---|---|---|
+| team | Grouping variable | Nominal categorical (24 clubs) | Multinomial categorical |
+| position | Explanatory | Nominal categorical (GK, DEF, MID, FWD) | Multinomial categorical |
+| age | Explanatory | Continuous, recorded in whole years | Empirical continuous |
+| minutes_played | Response in week 2; otherwise explanatory/exposure for injury | Bounded continuous | Ceiling-affected at 3960 |
+| training_load | Explanatory | Ordinal (1–5) | Ordered discrete |
+| prev_injuries | Explanatory for `injured` | Count (0–4) | Right-skewed count |
+| bmi | Explanatory | Continuous | Empirical continuous |
+| injured | Response | Binary (0/1) | Bernoulli; binomial when aggregated |
+| home_away | Explanatory (matches) | Binary categorical | Binary categorical |
+| goals_scored | Response | Count | Poisson candidate |
+| goals_conceded | Response | Count | Poisson candidate |
+| opponent_rank | Explanatory (matches) | Ordinal (1–24), treated as numeric | Ordered discrete |
+| result | Response (derived) | Ordered categorical (L < D < W) | Ordinal categorical |
 
 ### Planned model for each response (Liri)
 
@@ -88,6 +97,34 @@ residual plots. A normal linear model doesn't respect an upper limit.
 | goals_scored, goals_conceded | Count | Poisson GLM | log | log-rate / rate ratios | 6 |
 | result (W/D/L) | Ordinal | Ordinal (proportional odds) model | logit | cumulative log-odds | 10 |
 | injured, players within teams | Binary, grouped | Binomial GLMM, random team effect | logit | conditional log-odds | 11 |
+
+**Injury.** `injured` is a binary outcome, so a binomial GLM with a logit link
+keeps fitted probabilities between zero and one. A coefficient is the change in
+log-odds for a one-unit predictor increase (or relative to a reference category),
+and its exponential is an odds ratio. Candidate predictors are position, age,
+minutes played, training load, previous injuries and BMI because they represent
+player role, exposure, workload, injury history and physiology.
+
+**Goals scored and conceded.** These are non-negative counts, so Poisson GLMs
+with log links are the starting models. A coefficient is a change in the log
+expected goal count and its exponential is a rate ratio. `home_away` represents
+venue and `opponent_rank` represents opposition strength. Dispersion must be
+checked because a variance much larger than the mean would make the plain
+Poisson model unsuitable.
+
+**Match result.** `result` has a natural order (loss < draw < win) without equal
+spacing, so an ordinal proportional-odds model is more suitable than treating it
+as continuous. With a logit link, coefficients describe cumulative log-odds and
+exponentiated coefficients are cumulative odds ratios, subject to the
+proportional-odds assumption. Venue and opponent rank are the planned predictors
+for the same reasons as in the goal models.
+
+**Players grouped within teams.** Players at the same club may share training,
+medical and selection environments, so their injury outcomes may be correlated.
+A binomial GLMM with a random intercept for team can represent this clustering
+without estimating 23 separate fixed team coefficients. Fixed-effect
+coefficients are conditional log-odds, holding the team effect constant; their
+exponentials are conditional odds ratios.
 
 ### 12/10/2026 — Why GLMs rather than linear models (Zack)
 - **Goals:**
