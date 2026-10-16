@@ -70,6 +70,14 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 | `injury_drop1_full.csv` | Likelihood ratio test for each term in the full injury model |
 | `injury_final_odds_ratios.csv` | Odds ratios and 95% CIs for the final injury model (`injured ~ age + training_load + prev_injuries`) |
 
+**`04d_grouped_binomial.R`** (Liri)
+| File | Contents |
+|---|---|
+| `injury_team_grouped.csv` | Team injury counts, squad sizes, observed rates and common fitted rate |
+| `injury_team_grouped_gof.csv` | Deviance and Pearson checks for extra-binomial team variation |
+| `injury_team_lrt.csv` | Likelihood-ratio and AIC comparison of the final injury model with and without fixed team effects |
+| `injury_position_grouped.csv` | Observed and grouped-binomial fitted injury rates by position |
+
 **`04e_ashford_wins_and_predictions.R`** (Zack)
 | File | Contents |
 |---|---|
@@ -81,4 +89,4 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 | `injury_predicted_probabilities.csv` | Predicted injury probability and 95% CI by previous injuries × training load, at age 25 |
 | `injury_prob_by_prev_injuries.png` | Predicted injury probability against previous injuries, one line per training load |
 
-*Still to come this week:* outputs from `04a` (Yousuf), `04c` (Vish) and `04d` (Liri).
+*Still to come this week:* outputs from `04a` (Yousuf) and `04c` (Vish).

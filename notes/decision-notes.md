@@ -163,10 +163,39 @@ to be compared in `04c`.
 - [ ] training_load numeric vs factor in the logistic model (`04b`, Liha)
 - [ ] prev_injuries numeric vs factor (`04b`, Liha)
 - [ ] Extensions kept or rejected: age², interactions, log(minutes), link function (`04c`, Vish)
-- [ ] Team effect: likelihood ratio test result, and note for week 11 GLMM (`04d`, Liri)
+- [x] Team effect: likelihood ratio test result, and note for week 11 GLMM (`04d`, Liri)
 - [x] Ashford win model results and small-sample caveat (`04e`, Zack)
 
 (Add reasoning here.)
+
+### 16/10/2026 — Grouped binomial models and team effect (Liri, `04d`)
+
+**Team-level grouped model.** Injury counts and squad sizes were aggregated for
+the 24 teams and fitted as `cbind(injured, n - injured) ~ 1`. Raw injury rates
+ranged from 8.3% (Moorfield and Penwick) to 44.4% (Grantwick), compared with the
+overall fitted rate of 18.5%. Despite that range, the grouped model gives
+residual deviance 24.12 on 23 df (ratio 1.05, p = 0.397) and Pearson dispersion
+1.12. There is therefore no clear evidence of extra-binomial variation at team
+level in these data.
+
+**Fixed team effect.** Team was added to Person 2's final individual model,
+`injured ~ age + training_load + prev_injuries`. Adding 23 team coefficients
+reduced deviance by 20.88 on 23 df (likelihood-ratio p = 0.588) and increased AIC
+from 547.27 to 572.39. **Decision:** do not keep team as a fixed effect because
+it adds many parameters without improving fit. A random team intercept remains
+a more parsimonious way to revisit possible clustering in the week 11 GLMM.
+With only about 24–28 players per team, absence of evidence here should not be
+treated as proof that clubs have identical underlying injury risks.
+
+**Position-level grouped model.** A grouped binomial model with position as the
+predictor exactly reproduced the raw injury proportions: DEF 15.7%, FWD 18.4%,
+GK 27.4%, and MID 18.9% (differences only at numerical rounding precision).
+This occurs because fitting one probability for each of four groups makes this
+four-cell model saturated; it is a check that grouped successes/failures were
+constructed correctly, not evidence that every position difference is real.
+
+**Outputs:** `injury_team_grouped.csv`, `injury_team_grouped_gof.csv`,
+`injury_team_lrt.csv`, and `injury_position_grouped.csv`.
 
 ### 15/10/2026 — Ashford win model (Zack, `04e`)
 **Model:** `win ~ home_away + opponent_rank`, binomial GLM with logit link, where

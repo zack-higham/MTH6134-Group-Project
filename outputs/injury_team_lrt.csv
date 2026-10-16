@@ -1,0 +1,2 @@
+"comparison","df_added","deviance_reduction","p_value","AIC_without_team","AIC_with_team"
+"Add team as a 24-level fixed effect",23,20.8834461414081,0.58820526794828,547.26983328259,572.386387141182
