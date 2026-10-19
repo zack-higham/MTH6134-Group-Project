@@ -22,8 +22,8 @@ Members: Yousuf, Liha, Vish, Liri, Zack
 
 | Date | Member | Work done | Files |
 |---|---|---|---|
-| | Yousuf | Main logistic model for injury: odds ratios and interpretation | `code/04a_injury_logistic.R` |
-| | Liha | Model selection and final injury model | `code/04b_injury_model_selection.R` |
+|17/10/2026 | Yousuf | Main logistic model for injury: odds ratios and interpretation | `code/04a_injury_logistic.R` |
+|16/10/2026 | Liha | Model selection and final injury model | `code/04b_injury_model_selection.R` |
 |18/10/2026 | Vish | Extensions: age², interactions, exposure, link functions | `code/04c_injury_extensions.R` |
 | 16/10/2026 | Liri | Grouped binomial checks by team and position; tested adding a 23-df fixed team effect to the final injury model and documented the week 11 random-effect follow-up | `code/04d_grouped_binomial.R`, `outputs/injury_team_*`, `outputs/injury_position_grouped.csv`, `notes/decision-notes.md` |
 | 15/10/2026 | Zack | Ashford win model (`win ~ home_away + opponent_rank`): odds ratios with 95% CIs, drop1 likelihood ratio tests, grouped observed-vs-fitted check by venue and opponent-rank band; predicted win probability plot with 95% bands; predicted injury probability plot from the final injury model (04b) | `code/04e_ashford_wins_and_predictions.R`, `outputs/win_*`, `outputs/injury_predicted_probabilities.csv`, `outputs/injury_prob_by_prev_injuries.png` |
