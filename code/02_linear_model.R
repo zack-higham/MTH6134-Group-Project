@@ -63,3 +63,4 @@ lm_bmi = lm(bmi ~ position + age + training_load + prev_injuries + injured, data
 summary(lm_bmi)
 drop1(lm_bmi, test = "F")
 AIC(lm_bmi)
+#0 variables of statistical significance, bmi is better as an explanatory variable. 
