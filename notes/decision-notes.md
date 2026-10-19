@@ -170,7 +170,101 @@ to be compared in `04c`.
 - [x] Team effect: likelihood ratio test result, and note for week 11 GLMM (`04d`, Liri)
 - [x] Ashford win model results and small-sample caveat (`04e`, Zack)
 
-(Add reasoning here.)
+The reasoning for each decision is in the dated entries below.
+
+### 19/10/2026 — Full logistic model for injury (Yousuf, `04a`)
+*Recorded by Zack (19/10/2026) from Yousuf's script; the model is Yousuf's.
+Yousuf to check and reword.*
+
+**Model:** `injured ~ position + age + minutes_per_1000 + training_load +
+prev_injuries + bmi`, binomial GLM with logit link, GK baseline. Minutes were
+rescaled to units of 1,000 so the odds ratio is readable.
+**Why this model:** `injured` is binary, so a binomial GLM keeps fitted
+probabilities in (0, 1) and the logit link gives odds ratios (week 3 decision).
+All six candidate predictors from the week 3 roles table are included as the
+starting point for model selection in `04b`.
+
+| Term | Odds ratio | 95% CI | LRT p (given the other terms) |
+|---|---|---|---|
+| prev_injuries (per injury) | 1.66 | 1.39 to 1.99 | < 0.001 |
+| age (per year) | 1.11 | 1.05 to 1.18 | < 0.001 |
+| training_load (per level) | 1.35 | 1.08 to 1.69 | 0.008 |
+| minutes (per 1,000) | 1.01 | 0.70 to 1.45 | 0.96 |
+| bmi (per unit) | 0.96 | 0.83 to 1.11 | 0.58 |
+| position (DEF / MID / FWD vs GK) | 0.56 / 0.65 / 0.59 | all CIs include 1 | 0.51 (3 df) |
+
+- Holding the other terms fixed, previous injuries, age and training load are
+  associated with higher odds of injury. Minutes, bmi and position show no
+  evidence of association.
+- Goalkeepers have the highest raw injury rate (27%), but the position effect
+  disappears once the other variables are accounted for.
+- Yousuf compared two term orders with `anova()`. Sequential tests depend on the
+  order (position p = 0.25 entered first, 0.51 entered last), so the table uses
+  `drop1()` tests, which don't.
+- His low/medium/high training-load groups come out as 1–3, 4 and 5, because
+  most players are on loads 2–4; injury rates 14%, 26%, 26%.
+
+**Output:** `injury_full_odds_ratios.csv`.
+
+### 14/10/2026 — Model selection and final injury model (Liha, `04b`)
+*Recorded by Zack (19/10/2026) from the FINDING comment in Liha's script.
+Liha to check.*
+
+**Decision:** the final injury model is
+`injured ~ age + training_load + prev_injuries`.
+**How:** starting from Yousuf's full model, backward elimination by likelihood
+ratio test (drop the term with the largest p, stop when every p < 0.05). `step()`
+by AIC selects the same model.
+
+| Dropped (in order) | LRT p when dropped |
+|---|---|
+| minutes | 0.96 |
+| bmi | 0.58 |
+| position (3 df) | 0.43 |
+
+- AIC falls from 554.2 (full model) to 547.3 (final model).
+- **training_load kept numeric:** the 5-level factor version is no
+  improvement (LRT p = 0.24).
+- **prev_injuries kept numeric:** the factor version is no improvement
+  (LRT p = 0.77).
+- **Interpretation:** holding the other terms fixed, each extra previous injury
+  is associated with the odds of injury being multiplied by 1.67 (95% CI 1.40
+  to 2.00); each extra training-load level by 1.38 (1.11 to 1.71); each extra
+  year of age by 1.11 (1.05 to 1.18).
+- **Position:** goalkeepers have the highest raw rate (27%), but with only 62
+  goalkeepers the data can't distinguish a real position effect from chance.
+
+**Alternatives considered:** keeping position for context; factor versions of
+training_load and prev_injuries.
+**Output:** `injury_drop1_full.csv`, `injury_final_odds_ratios.csv`.
+
+### 18/10/2026 — Extensions to the final injury model (Vish, `04c`)
+*Recorded by Zack (19/10/2026) from Vish's script comments. Vish to check.*
+
+**Decision:** keep Liha's final model unchanged, with the logit link. Every
+extension was tested against it with a likelihood ratio test (or AIC for the
+link functions) and rejected.
+
+| Extension | Test | Result |
+|---|---|---|
+| age² (non-linear age) | LRT | p = 0.40 |
+| training_load × prev_injuries | LRT | p = 0.12 |
+| position × training_load | LRT | p = 0.77 |
+| log(minutes_played + 1) as exposure | LRT, AIC | p = 0.52; AIC 548.8 vs 547.3 |
+| Probit link | AIC | 549.0 vs 547.3 (logit) |
+| Cloglog link | AIC | 546.1 vs 547.3 (logit) |
+
+- No evidence of curvature in age or of either interaction.
+- Minutes played, even on the log scale, adds nothing once age, training load
+  and previous injuries are in the model.
+- The three links fit almost equally well (AIC differences under 2) and give
+  nearly identical fitted probabilities (`link_functions_comparisons.png`).
+  Logit is kept because its coefficients are odds ratios.
+- **Note:** `position * training_load` also adds position as a main effect, so
+  that test covers both. The interaction alone, given position, gives p = 0.91;
+  the conclusion is the same.
+
+**Output:** `injury_extensions_comparison.csv`, `link_functions_comparisons.png`.
 
 ### 16/10/2026 — Grouped binomial models and team effect (Liri, `04d`)
 
@@ -268,7 +362,9 @@ each lecturer check.
 
 ### 15/10/2026 — Workspace tidy-up: renamed files (Zack)
 **What:** files whose names didn't follow the agreed naming were renamed. No
-file was deleted and no file's content was changed except where noted.
+file's content was changed except where noted. The only deletion was the
+comment-only test file below. *(Correction, 19/10/2026: this entry originally
+said no file was deleted.)*
 
 | Old name | New name | Why |
 |---|---|---|
@@ -344,4 +440,45 @@ https://github.com/zack-higham/mth6134-group-project/tree/6fc4269/code/drafts
 
 **Alternative considered:** keeping them in `code/drafts/` (the previous
 arrangement).
+
+*Reversed on 19/10/2026: see below.*
+
+### 19/10/2026 — `code/drafts/` restored (Zack)
+**What:** restored `code/drafts/02_linear_model_draft.R` (Vish's original week 2
+file) and `code/drafts/02_linear_model_starter.R` (the old starter), unchanged,
+from commit `6fc4269`.
+**Why:** the brief and our workspace rules say to keep all code, including
+superseded attempts, in the workspace itself. Git history alone isn't enough,
+because the workspace is checked as a folder. `run_all.R` only runs numbered
+files directly in `code/`, so the drafts are kept without being run.
+**Alternative considered:** leaving them only in git history (the 15/10
+decision above).
+
+### 19/10/2026 — Yousuf's week 4 script renamed and made to run (edit by Zack)
+**This is an edit, not new analysis. The model and code are Yousuf's.**
+
+**What:** Yousuf uploaded his week 4 model as `code/Statistical Modelling
+week4.R` (commit `8144dbc`). It was renamed to `code/04a_injury_logistic.R` in a
+commit of its own, so the history shows it is the same file. A second commit
+then:
+- added `source("code/00_load_data.R")` (the original read from an object
+  `league_players` that is never created, so it stopped at line 5);
+- replaced `league_players` with `players`, the loader's name;
+- added a section marked [Zack] at the end with `drop1()` tests and a written
+  interpretation of each term, which the week 4 task asked for. Yousuf to
+  review and reword.
+
+All changes are listed in the script's header. His original version is
+unchanged in the git history at `8144dbc`.
+**Why:** the script didn't run and wasn't picked up by `run_all.R`, which only
+runs files starting with a number.
+**Alternative considered:** keeping both files side by side; not done, because
+the renamed file contains all of Yousuf's code unchanged.
+
+### 19/10/2026 — Week 4 workspace check (Zack)
+- All 12 numbered scripts run cleanly from a fresh session with
+  `source("run_all.R")`, and their outputs match the committed files.
+- Every model was refitted independently and the numbers in these notes were
+  checked against it.
+- Notes, READMEs and project status updated to cover weeks 2–4.
 

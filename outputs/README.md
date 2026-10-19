@@ -46,7 +46,7 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 | `lm1_drop1_results.csv` | F-test `drop1` results for the same model (renamed from `drop1_results.csv`) |
 | `lm1_residuals.png` | The four residual plots for the same model |
 
-**Saved by hand** (Vish, from his original week 2 file, kept in git history at commit `6fc4269`; no script recreates these)
+**Saved by hand** (Vish, from his original week 2 file, `code/drafts/02_linear_model_draft.R`; no script recreates these)
 | File | Contents |
 |---|---|
 | `lm1_coefficients_annotated.csv` | Vish's coefficient table with his written interpretation of each term, R², AIC and the training_load factor test. Defender is the baseline position here, so position effects differ from `lm1_coefficients.csv` (GK baseline). Originally committed as `lm1_coefficients.csv`. |
@@ -64,11 +64,22 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 
 ## Week 4 — Binomial regression
 
+**`04a_injury_logistic.R`** (Yousuf)
+| File | Contents |
+|---|---|
+| `injury_full_odds_ratios.csv` | Odds ratios and 95% CIs for the full injury model (all six predictors, GK baseline, minutes per 1,000) |
+
 **`04b_injury_model_selection.R`** (Liha)
 | File | Contents |
 |---|---|
 | `injury_drop1_full.csv` | Likelihood ratio test for each term in the full injury model |
 | `injury_final_odds_ratios.csv` | Odds ratios and 95% CIs for the final injury model (`injured ~ age + training_load + prev_injuries`) |
+
+**`04c_injury_extensions.R`** (Vish)
+| File | Contents |
+|---|---|
+| `injury_extensions_comparison.csv` | AIC and residual deviance of the final injury model with logit, probit and cloglog links |
+| `link_functions_comparisons.png` | Logit vs probit fitted injury probabilities |
 
 **`04d_grouped_binomial.R`** (Liri)
 | File | Contents |
@@ -89,4 +100,3 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 | `injury_predicted_probabilities.csv` | Predicted injury probability and 95% CI by previous injuries × training load, at age 25 |
 | `injury_prob_by_prev_injuries.png` | Predicted injury probability against previous injuries, one line per training load |
 
-*Still to come this week:* outputs from `04a` (Yousuf) and `04c` (Vish).

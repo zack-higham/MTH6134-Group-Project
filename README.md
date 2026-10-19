@@ -25,7 +25,7 @@ Analysis of the fictional Midland Premier League 2023/24 season.
 
 All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selection.R`, which load the tidyverse (`install.packages("tidyverse")` once before running them).
 
-`run_all.R` runs every numbered script in `code/`. Earlier drafts are in the git history (see decision-notes, 15/10/2026); Vish's original week 2 file and the old starter are at commit [`6fc4269`](https://github.com/zack-higham/mth6134-group-project/tree/6fc4269/code/drafts).
+`run_all.R` runs every numbered script directly in `code/`. Superseded drafts are kept in `code/drafts/` (Vish's original week 2 file and the old starter) and are not run.
 
 ## Scripts
 | Script | Week | Purpose |
@@ -37,17 +37,18 @@ All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selecti
 | `02_linear_model.R` | 2 | Normal linear regression (Vish) |
 | `03a_variable_roles.R` | 3 | Responses vs explanatory variables |
 | `03b_lm_vs_glm.R` | 3 | Why linear models fail for counts/binary; first GLMs |
-| `04a_injury_logistic.R` | 4 | Full logistic model for injury, odds ratios |
+| `04a_injury_logistic.R` | 4 | Full logistic model for injury, odds ratios (Yousuf) |
 | `04b_injury_model_selection.R` | 4 | Model selection, final injury model |
 | `04c_injury_extensions.R` | 4 | age², interactions, exposure, link functions |
 | `04d_grouped_binomial.R` | 4 | Grouped binomial, goodness of fit, team effect |
 | `04e_ashford_wins_and_predictions.R` | 4 | Ashford win model, predicted-probability plots |
+| `drafts/` | 2 | Superseded drafts, kept but not run |
 | `run_all.R` (project root) | — | Runs all scripts in order and reports failures |
 
 ## Weekly progress
 - [x] Week 2 — Exploration + normal linear regression
 - [x] Week 3 — Responses vs explanatory variables
-- [ ] Week 4 — Binomial regression
+- [x] Week 4 — Binomial regression
 - [ ] Week 5 — Residuals and diagnostics (workspace link due end of week 5)
 - [ ] Week 6 — Poisson regression
 - [ ] Week 8 — Contingency tables I
