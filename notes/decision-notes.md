@@ -166,7 +166,7 @@ to be compared in `04c`.
 - [ ] Final injury model: terms kept and dropped, with test results (`04b`, Liha)
 - [ ] training_load numeric vs factor in the logistic model (`04b`, Liha)
 - [ ] prev_injuries numeric vs factor (`04b`, Liha)
-- [ ] Extensions kept or rejected: age², interactions, log(minutes), link function (`04c`, Vish)
+- [x] Extensions rejected all of the following: age², interactions, log(minutes), link function (`04c`, Vish)
 - [x] Team effect: likelihood ratio test result, and note for week 11 GLMM (`04d`, Liri)
 - [x] Ashford win model results and small-sample caveat (`04e`, Zack)
 
