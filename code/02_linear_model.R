@@ -59,7 +59,7 @@ dev.off()
 
 #Second response analysis: using BMI as the response variable
 # [Zack] TODO (Vish): this section was empty in the original file.
-lm_bmi = lm(bmi ~ position + age + training_load + prev_injuries + injured, data = league_players)
+lm_bmi = lm(bmi ~ position + age + training_load + prev_injuries + injured, data = players)
 summary(lm_bmi)
 drop1(lm_bmi, test = "F")
 AIC(lm_bmi)
