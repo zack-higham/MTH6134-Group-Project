@@ -163,9 +163,9 @@ to be compared in `04c`.
 `injured ~ position + age + minutes_played + training_load + prev_injuries + bmi`
 
 ### Decisions to record this week (fill in as completed)
-- [ ] Final injury model: terms kept and dropped, with test results (`04b`, Liha)
-- [ ] training_load numeric vs factor in the logistic model (`04b`, Liha)
-- [ ] prev_injuries numeric vs factor (`04b`, Liha)
+- [x] Final injury model: terms kept: (age, training_load & prev_injuries) and dropped, with test results (`04b`, Liha)
+- [x] training_load numeric (chosen) vs factor in the logistic model (`04b`, Liha)
+- [x] prev_injuries numeric (chosen) vs factor (`04b`, Liha)
 - [x] Extensions rejected all of the following: age², interactions, log(minutes), link function (`04c`, Vish)
 - [x] Team effect: likelihood ratio test result, and note for week 11 GLMM (`04d`, Liri)
 - [x] Ashford win model results and small-sample caveat (`04e`, Zack)
