@@ -1,0 +1,4 @@
+"term","RR_all46","lower_95_all46","upper_95_all46","LRT_p_all46","RR_without8","lower_95_without8","upper_95_without8","LRT_p_without8"
+"(Intercept)",0.814,0.405,1.514,NA,0.944,0.473,1.75,NA
+"home_awayAway",0.5,0.287,0.844,0.0091,0.586,0.33,1.017,0.0576
+"opponent_rank",1.056,1.017,1.098,0.004,1.034,0.993,1.078,0.1016

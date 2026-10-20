@@ -1,0 +1,4 @@
+"term","estimate","se_poisson","se_quasi","ratio"
+"(Intercept)",-0.2057,0.3351,0.3335,0.995
+"home_awayAway",-0.6931,0.2739,0.2725,0.995
+"opponent_rank",0.0543,0.0194,0.0193,0.995
