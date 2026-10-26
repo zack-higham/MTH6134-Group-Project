@@ -1,0 +1,7 @@
+"home_away","result","observed","expected","pearson_resid"
+"Home","L",3,6.5,-1.37
+"Away","L",10,6.5,1.37
+"Home","D",5,5.5,-0.21
+"Away","D",6,5.5,0.21
+"Home","W",15,11,1.21
+"Away","W",7,11,-1.21

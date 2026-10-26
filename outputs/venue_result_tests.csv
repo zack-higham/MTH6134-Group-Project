@@ -1,0 +1,3 @@
+"test","statistic","df","p_value"
+"Pearson chi-squared (chisq.test)",6.769,2,0.0339
+"Likelihood ratio, home_away:result (log-linear)",7.044,2,0.0295
