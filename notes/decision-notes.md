@@ -482,3 +482,42 @@ the renamed file contains all of Yousuf's code unchanged.
   checked against it.
 - Notes, READMEs and project status updated to cover weeks 2–4.
 
+### 2026-10-26 05b: Grouped goodness of fit, final injury model (Liha, Person 2)
+
+**What was done**
+Script: code/05b_injury_grouped_gof.R. Final model from 04b: injured ~ age + training_load + prev_injuries (logistic regression, 620 players).
+
+**GOF method and why the deviance can't be used**
+For player-level 0/1 data the residual deviance is not a valid goodness-of-fit test (slides 5 and 7), because each player's residual can take only two values and the deviance does not follow a chi-squared distribution. I grouped players by training_load x prev_injuries instead, giving 23 non-empty cells out of a possible 25 (training_load 1 has no players with 3 or 4 previous injuries). For each cell:
+- observed = number injured;
+- expected = sum of the final model's fitted probabilities;
+- residual = (O - E) / sqrt(sum of p(1 - p)).
+
+Cells with |residual| > 2 are flagged. Cells are flagged "small" if the expected injured or expected not-injured count is below 5, or the cell has fewer than 10 players (my own rule of thumb, based on the usual chi-squared guideline in slide 5).
+
+Alternative considered: residual deviance on the player-level fit (rejected, invalid for binary data).
+
+**Result**
+1 of 23 cells has |residual| > 2: training_load 1, prev_injuries 0 (14 players; observed 3, expected 0.68, residual +2.89). The model under-predicts injuries in this cell. The cell is small (expected count below 1), so the residual is unreliable, and with 23 cells about one value beyond +/-2 is expected by chance alone. No other cell exceeds +/-2.
+
+The next largest residual is training_load 5, prev_injuries 4 (-1.91; only 2 players, 0 observed, 1.29 expected). At training_load 4, the cells with 2, 3 and 4 previous injuries all have observed above expected (10 vs 7.0, 8 vs 5.8, 4 vs 2.8; residuals +1.36, +1.23, +1.09). This is a mild pattern inside +/-2 and I did not treat it as misfit.
+
+Overall: no clear evidence of lack of fit. This is weak evidence that the model fits, not proof, since many cells are small.
+
+**Small and badly fitted cells**
+11 of 23 cells are flagged small. All four prev_injuries = 4 cells are among them (training_load 2, 3, 4, 5 with 3, 11, 5 and 2 players; residuals -1.33, +0.02, +1.09, -1.91), so their residuals are unreliable and should not be over-read. The one cell beyond +/-2 is also small.
+
+**Optional: grouped refit with age in bands**
+Age bands <=22, 23-26, 27-30, 31+; model cbind(injured, n - injured) ~ age_band + training_load + prev_injuries on 78 cells.
+- Residual deviance 74.3 on 72 df (p = 0.40).
+- Pearson X2 70.3 on 72 df (p = 0.54).
+- No evidence of lack of fit, but all 78 cells are small (slide 5 caveat), so the chi-squared approximation is unreliable and the test has low power. These p-values should not be read as showing the model fits well.
+
+Odds ratios from this grouped model (95% CI; these come from the age-band model, not the final player-level model): 23-26 vs <=22: 1.29 (0.70 to 2.36); 27-30 vs <=22: 2.14 (1.15 to 3.99); 31+ vs <=22: 3.47 (1.60 to 7.53); training_load per unit: 1.37 (1.10 to 1.70); prev_injuries per extra injury: 1.68 (1.40 to 2.01). Older age (27+), higher training load and more previous injuries are associated with higher odds of injury. The 23-26 band is not clearly different from <=22 (its interval includes 1), and the 31+ interval is wide, so that estimate is imprecise.
+
+**Decision**
+Keep the final injury model unchanged, and keep all players in the data (nothing was refitted without any points, since no cell gave strong evidence of misfit). The flagged cell (training_load 1, prev_injuries 0) is noted but not acted on because it is tiny. Results describe associations, not causal effects.
+
+**Outputs saved**
+outputs/injury_grouped_obs_vs_fitted.csv, outputs/injury_grouped_fit.png, outputs/injury_grouped_age_band_gof.csv, outputs/injury_grouped_age_band_cells.csv, outputs/injury_grouped_age_band_or.csv
+
