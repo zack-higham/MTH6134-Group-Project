@@ -38,20 +38,28 @@ dev.off()
 
 #-Refit model excluding top Cook's distance point (match 27)
 m_win_no27 = update(m_win, subset = -27)
-# Compare coefficient estimates and odds ratios
-coef_comparison = data.frame(
-  Full_Model = coef(m_win),
-  No_Row27_Model = coef(m_win_no27),
-  Percent_Change = ((coef(m_win_no27) - coef(m_win)) / coef(m_win)) * 100
-)
-print(coef_comparison)
-# Save the influence comparison output for team documentation
-write.csv(coef_comparison, "outputs/win_influence_comparison.csv", row.names = TRUE)
-#
+# Helper function to extract Odds Ratios and 95% Confidence Intervals
+get_or_ci = function(model) {
+  or = exp(coef(model))
+  ci = exp(confint.default(model))
+  sprintf("%.3f (%.3f, %.3f)", or, ci[, 1], ci[, 2])
+}
 
-#-Inspect Row 8 (8-0 Match) influence
+# Compare coefficient estimates using Odds Ratios and 95% CIs
+coef_comparison = data.frame(
+  Term = names(coef(m_win)),
+  Full_Model_OR_95CI = get_or_ci(m_win),
+  No_Match27_OR_95CI = get_or_ci(m_win_no27)
+)
+
+print(coef_comparison)
+
+# Save the influence comparison output for team documentation
+write.csv(coef_comparison, "outputs/win_influence_comparison.csv", row.names = FALSE)
+
+# Inspect Row 8 (8-0 Match) influence
 cat("Row 8 Leverage:", hatvalues(m_win)[8], "\n")
 cat("Row 8 Cook's Distance:", cooks.distance(m_win)[8], "\n")
-#Note: Match 8 has moderate leverage (0.0772 > p/n) due to rank 24, but a negligible 
+# Note: Match 8 has moderate leverage (0.0772 > p/n) due to rank 24, but a negligible 
 # Cook's distance (0.00558). Because the outcome is binary win (1), the 8-0 margin 
 # carries no additional weight over a 1-0 win, preventing parameter distortion.
