@@ -15,30 +15,46 @@ source("code/00_load_data.R")
 #fits the lm to all the variables given. uses defender as the base position to compare to.
 # [Zack] note: 00_load_data.R sets GK as the baseline position, so position
 # coefficients are relative to goalkeepers.
+#1.Re level position so Goalkeeper (GK) is the reference baseline category
+players$position <- relevel(factor(players$position), ref = "GK")
+
+#2.fits the lm to all the variables given. uses defender as the base position to compare to. 
 lm1 = lm(minutes_played ~ position + age + training_load + bmi + prev_injuries, data = players)
 
 #creates a summary of lm1 & exports it to Excel.
 summary(lm1)
 coef_summary <- data.frame(
-  Estimate = coef(lm1),
-  Std.Error = summary(lm1)$coefficients[, "Std. Error"],
+  Term = names(coef(lm1)),
+  Estimate = coef(lm1), 
+  Std_Error = summary(lm1)$coefficients[, "Std. Error"],
   t_value = summary(lm1)$coefficients[, "t value"],
   p_value = summary(lm1)$coefficients[, "Pr(>|t|)"],
   CI_lower = confint(lm1)[, 1],
-  CI_upper = confint(lm1)[, 2]
+  CI_upper = confint(lm1)[, 2],
+  Interpretation_Relative_to_GK = c(
+    "Expected baseline minutes for a Goalkeeper (GK) reference category.",
+    "Defender relative to GK (holding other factors constant).",
+    "Midfielder relative to GK (holding other factors constant).",
+    "Forward relative to GK (holding other factors constant).",
+    "Effect of a 1-unit increase in age on minutes played.",
+    "Effect of a 1-unit increase in training load on minutes played.",
+    "Effect of a 1-unit increase in BMI on minutes played.",
+    "Effect of previous injuries on minutes played."
+  )
 )
-write.csv(coef_summary, "outputs/lm1_coefficients.csv", row.names = TRUE)
 
-#Run the drop cmd with an F test to see the p value of each variable if dropped.
+write.csv(coef_summary, "outputs/lm1_coefficients_annotated.csv", row.names = FALSE)
+
+#3.Run the drop cmd with an F test to see the p value of each variable if dropped. 
 drop_results = drop1(lm1, test = "F")
 AIC(lm1)
-#Position & training load are the only variables with statistical significance, drop the rest.
-write.csv(drop_results, "outputs/lm1_drop1_results.csv", row.names = TRUE)
-#creating the lm with the 2 variables of statistical significance.
+#Position & training load are the only variables with statistical significance, drop the rest. 
+write.csv(drop_results, "outputs/drop1_results.csv", row.names = TRUE)
+#creating the lm with the 2 variables of statistical significance. 
 lm2 = lm(minutes_played ~ position + training_load, data = players)
 summary(lm2)
 coef_summary2 <- data.frame(
-  Estimate = coef(lm2),
+  Estimate = coef(lm2), 
   Std.Error = summary(lm2)$coefficients[, "Std. Error"],
   t_value = summary(lm2)$coefficients[, "t value"],
   p_value = summary(lm2)$coefficients[, "Pr(>|t|)"],
@@ -46,21 +62,21 @@ coef_summary2 <- data.frame(
   CI_upper = confint(lm2)[, 2]
 )
 
-#training load is a numeric, but it represents ordered categories.
+#4.training load is a numeric, but it represents ordered categories. 
 lm1_factor = update(lm1, .~. - training_load + factor(training_load))
 anova(lm1, lm1_factor)
-# p value = 0.7313, insufficient evidence that treating training load as a factor is beneficial. Numeric assumption is adequate.
+# p value = 0.7313, insufficient evidence that treating training load as a factor is beneficial. Numeric assumption is adequate. 
 
-#creating and exporting the plots
+#5.creating and exporting the plots
 png("outputs/lm1_residuals.png", width = 800, height = 800)
 par(mfrow = c(2, 2))
 plot(lm1)
 dev.off()
 
-#Second response analysis: using BMI as the response variable
-# [Zack] TODO (Vish): this section was empty in the original file.
+#6.Second response analysis: using BMI as the response variable
 lm_bmi = lm(bmi ~ position + age + training_load + prev_injuries + injured, data = players)
 summary(lm_bmi)
 drop1(lm_bmi, test = "F")
 AIC(lm_bmi)
 #0 variables of statistical significance, bmi is better as an explanatory variable. 
+
