@@ -8,7 +8,7 @@ summary(m_base)
 # Adding quadratic age term might capture non linear effects. Using likelihood ratio test.
 m_age_squared = update(m_base, .~. + I(age**2))
 anova(m_base, m_age_squared, test = "Chisq")
-# p = 0.4>0.005, insufficient evidence to reject H0, keep linear age. 
+# p = 0.4 > 0.05, insufficient evidence to reject H0, keep linear age. 
 
 #Testing interactions: retain base model without interaction terms. 
 
@@ -27,7 +27,8 @@ anova(m_base, int_2, test = "Chisq")
 m_log = glm(injured ~ age + training_load + prev_injuries + log(minutes_played + 1), family = binomial(link = "logit"), data = players)
 AIC(m_base, m_log)
 anova(m_base, m_log, test = "Chisq")
-# p=0.52 > 0.05 & AIC is identical. 
+# p=0.52 > 0.05 & AIC AIC values (548.8 vs 547.3) are highly comparable; 
+# showing a slight 1.5 unit preference for the logit model, confirming that the logit link is appropriate.
 #Log transformed mins played adds no significant explanatory power, keep base model.
 
 #Testing alternative link functions: probit & cloglog
