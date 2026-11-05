@@ -1,6 +1,21 @@
 # MTH6134 Group Project — Progress and Status
 
-*Last updated: 19/10/2026 (end of week 4 check)*
+*Last updated: 05/11/2026 (before week 8 and the second lecturer check)*
+
+## Where we are (summary)
+
+- **Done:** weeks 2–4 in full; week 5 diagnostics for three models (05b, 05c,
+  05e); the Poisson model for goals scored (in 05e); a first contingency-table
+  analysis (06e, venue × result), ahead of week 8.
+- **Open from weeks 5–6:** 05a (injury model residuals), 05d (minutes ceiling),
+  Poisson model for goals conceded. No owners yet.
+- **Workspace:** every numbered script runs from a fresh session except `05c`,
+  which needs the data-loader line added (Vish). `01b` and `04b` need the
+  tidyverse installed.
+- **Activity since 19/10:** Zack (05e, 06e, upkeep), Vish (05c, week 4 fixes),
+  Liha (05b). No commits from Yousuf since 19/10 or from Liri since 16/10.
+- **Lecturer check in week 8.** Confirm the workspace link was submitted on QM+
+  and is shared with e.matechou@qmul.ac.uk.
 
 ## Group (5)
 
@@ -20,7 +35,7 @@ All folder and file names are lowercase. Paths are case-sensitive on GitHub and 
 README.md
 .gitignore
 MTH6134-project.Rproj
-run_all.R    runs every numbered script in code/ in order and reports failures
+run_all.R    runs every numbered script in code/ in order (clean global environment each time) and reports failures
 code/        numbered R scripts; each starts with source("code/00_load_data.R")
 code/drafts/ superseded drafts, kept but not run
 data/        league_players.csv, ashford_matches.csv
@@ -35,7 +50,8 @@ reports/     final group + individual reports (later)
 
 ## Scripts
 
-All 12 numbered scripts run cleanly from a fresh session with `source("run_all.R")` (checked 19/10/2026).
+16 numbered scripts. All run from a fresh session with `source("run_all.R")`
+except `05c` (checked 05/11/2026).
 
 | Script | Week | Owner | Status |
 |---|---|---|---|
@@ -43,15 +59,21 @@ All 12 numbered scripts run cleanly from a fresh session with `source("run_all.R
 | `01_explore.R` | 2 | Zack | Kept (original combined exploration, split into 01a/01b) |
 | `01a_explore_players.R` | 2 | Yousuf | Done |
 | `01b_explore_matches.R` | 2 | Liha | Done |
-| `02_linear_model.R` | 2 | Vish | Done (bmi response added 16/10) |
+| `02_linear_model.R` | 2 | Vish | Done (GK baseline and annotated table from code, 29/10; drop1 file name to fix) |
 | `03a_variable_roles.R` | 3 | Liri | Done |
 | `03b_lm_vs_glm.R` | 3 | Zack | Done |
-| `04a_injury_logistic.R` | 4 | Yousuf | Done (renamed and made to run by Zack, 19/10; Yousuf to review the [Zack] interpretation section) |
+| `04a_injury_logistic.R` | 4 | Yousuf | Done (Yousuf still to review the [Zack] interpretation section) |
 | `04b_injury_model_selection.R` | 4 | Liha | Done |
-| `04c_injury_extensions.R` | 4 | Vish | Done |
+| `04c_injury_extensions.R` | 4 | Vish | Done (comments corrected 29/10) |
 | `04d_grouped_binomial.R` | 4 | Liri | Done |
 | `04e_ashford_wins_and_predictions.R` | 4 | Zack | Done |
-| `run_all.R` | — | Zack | Done |
+| `05a` (injury model residuals) | 5 | — | **Not started** |
+| `05b_injury_grouped_gof.R` | 5 | Liha | Done |
+| `05c_win_diagnostics.R` | 5 | Vish | Done, but **fails on its own**: needs `source("code/00_load_data.R")` |
+| `05d` (minutes ceiling) | 5 | — | **Not started** |
+| `05e_goals_influence.R` | 5 | Zack | Done |
+| `06e_venue_result_table.R` | 6 | Zack | Done (contingency tables, ahead of week 8) |
+| `run_all.R` | — | Zack | Done (now clears the global environment before each script, 05/11) |
 
 ---
 
@@ -141,26 +163,99 @@ All 12 numbered scripts run cleanly from a fresh session with `source("run_all.R
 
 ---
 
-## Before week 5 starts: small checks for owners
+## Week 5 — Residuals and diagnostics — MOSTLY DONE (26/10/2026)
 
-- **Yousuf:** review the [Zack] interpretation section at the end of `04a` and the 04a entry in decision-notes; reword in your own words. Check the date on your week 4 who-did-what row (the file was uploaded 19/10).
-- **Liha:** check the 04b entry in decision-notes (written up by Zack from your FINDING comment). Check the date on your week 4 row (your commits are 14–15/10).
+- **Liha, `05b`:** grouped goodness of fit for the final injury model
+  (training_load × prev_injuries, 23 cells).
+  - 1 of 23 cells has |residual| > 2 (load 1, 0 previous injuries: 3 observed v
+    0.68 expected), and it is a tiny cell. No clear evidence of lack of fit.
+  - Age-band grouped refit: deviance 74.3 on 72 df (p = 0.40), Pearson 70.3 on
+    72 df (p = 0.54), but every cell is small, so low power.
+  - Final injury model kept unchanged.
+- **Vish, `05c`:** diagnostics for the Ashford win model.
+  - All Cook's distances < 0.1. Largest: match 27 (2–1 away win v rank 6).
+  - Without match 27: away OR 0.205 → 0.157; rank OR 1.092 → 1.113, CI no
+    longer includes 1 (LRT p 0.059 → 0.029, Zack's check).
+  - The 8–0 has leverage 0.077 but Cook's distance 0.006: it counts as one win.
+- **Zack, `05e`:** Poisson model for goals scored and the 8–0.
+  - All 46: away RR 0.50 (0.29–0.84), p = 0.009; rank RR 1.056 per place
+    (1.017–1.098), p = 0.004. Deviance 49.8 on 43 df, dispersion 0.99.
+  - The 8–0: Cook's distance 0.64 (next largest 0.08), leverage 0.162.
+  - Without it: away 0.59 (0.33–1.02), p = 0.058; rank 1.034 (0.993–1.078),
+    p = 0.10. No other single match changes the conclusions.
+  - **Decision:** keep the 8–0; report the without-8–0 fit as a sensitivity
+    analysis. Quasipoisson / negative binomial not needed.
+- **Not done:** `05a` (player-level residuals, leverage and Cook's distance for
+  the final injury model), `05d` (linear model for minutes: the 3960 ceiling).
+
+## Week 6 — PARTLY DONE
+
+- Poisson for goals scored: done in `05e`.
+- **Zack, `06e`:** venue × result contingency table.
+  - X² = 6.77 on 2 df, p = 0.034. Away v home: win rather than loss OR 0.14
+    (0.02–0.62); draw rather than loss OR 0.36 (0.06–2.01).
+  - Three-way table with rank band: no three-way term (p = 0.83); venue and
+    result not conditionally independent given rank band (p = 0.019). Final
+    model rank*venue + venue*result (deviance 9.45 on 8 df); collapsible over
+    rank band.
+- **Not done:** Poisson model for goals conceded.
+
+---
+
+## Before the week 8 check
+
+**Owners (small fixes):**
 - **Vish:**
-  - check the 04c entry in decision-notes;
-  - in `04c`, two comments to correct: "p = 0.4 > 0.005" should be 0.05, and the log(minutes) AIC is 548.8 vs 547.3, not "identical";
-  - in `outputs/lm1_coefficients_annotated.csv`, each written interpretation sits one row above the term it describes, and "AIC is high hence model is not a good fit" needs removing (AIC has no absolute scale). Position effects there use DEF as baseline; restate against GK before they go in the report.
+  - add `source("code/00_load_data.R")` at the top of `05c` (it fails on its own);
+  - in `02`, change line 52 back to `outputs/lm1_drop1_results.csv`, and fix the
+    comment that still says defender is the baseline;
+  - check the 05c and 29/10 entries in decision-notes and your rows in
+    who-did-what (written up by Zack from your commits).
+- **Liha:** check your 05b row in who-did-what; fix the date on your week 4 row
+  (says 16/10, your commits are 14–15/10).
+- **Yousuf:** review the [Zack] interpretation section at the end of `04a` and
+  the 04a decision-notes entry; fix the date on your week 4 row (says 17/10,
+  file uploaded 19/10).
+- **Liri:** nothing outstanding from earlier weeks; pick up a week 5/6 or week 8
+  task below.
+- **Everyone:** add your own row to who-did-what when you finish something.
+  It is compared against the individual contribution statements.
 
-## Week 5 — Residuals and diagnostics (next)
+**Workspace (Zack):** confirm the QM+ link; restart R and run
+`source("run_all.R")` after Vish's fix.
 
-- **Deadline:** submit the workspace link on QM+ by the end of week 5, shared with e.matechou@qmul.ac.uk. Lecturer check this week.
-- Suggested tasks (one script each, `05a`–`05e`):
-  - Diagnostics on the final injury model: deviance/Pearson residuals, leverage, Cook's distance. Deviance is not a goodness-of-fit test for 0/1 data, so use a grouped check (e.g. by deciles of fitted probability).
-  - Influence of the 8–0 match on the Poisson goals model (`03b`): refit without it and compare.
-  - Diagnostics on the Ashford win model (`04e`).
-  - Diagnostics on the linear model for minutes (`02`): the 3960 ceiling.
-  - Workspace: before the check, restart R and run `source("run_all.R")`.
-- **Week 6:** Poisson for goals scored/conceded. Plain Poisson looks adequate after adjusting for home_away and opponent_rank.
-- **Week 11:** team variation in injury rates; random team effect (no evidence of overdispersion at team level in week 4, but worth checking with a GLMM).
+## Remaining work for the rest of term
+
+Suggested owners only; agree them at the week 8 session.
+
+| Week | Task | Script | Suggested owner |
+|---|---|---|---|
+| 5 (catch-up) | Injury model residuals, leverage, Cook's distance; binned residual plot | `05a` | Yousuf |
+| 5 (catch-up) | Linear model for minutes: the 3960 ceiling in the residuals | `05d` | Liri |
+| 6 (catch-up) | Poisson model for goals conceded (home_away, opponent_rank, dispersion, diagnostics) | `06a` | Liha |
+| 8 | Position × injury table: chi-squared, log-linear model, odds ratios | `08a` | Liri |
+| 8 | Training load × injury and prev_injuries × injury tables (ordered categories) | `08b` | Yousuf |
+| 9 | Three-way tables, e.g. position × training load × injury; conditional independence and collapsibility | `09a` | Vish |
+| 9 | Contingency-tables II follow-ups from the lecture | `09b` | Liha |
+| 10 | Ordinal (proportional-odds) model for result (L < D < W) ~ home_away + opponent_rank; compare with 06e and 04e | `10a` | Zack |
+| 10 | Any other outcome needing a specialised model (e.g. the minutes ceiling) | `10b` | Vish |
+| 11 | Injury GLMM with a random team effect; compare with the week 4 fixed-effect test | `11a` | Liri |
+| 11 | Goals GLMM with a random opponent effect (each opponent played twice) | `11b` | Zack |
+| 12 | Choose the three analyses; plan the report and split the writing | — | All |
+| Brief | Group report (PDF), individual reports in `reports/` | — | All |
+
+**Notes on the plan:**
+- Week 10 and 11 models need packages beyond base R (e.g. `MASS::polr` for the
+  ordinal model, `lme4::glmer` for GLMMs). Note them in the README when added.
+- The lecturer checks again in week 11, so weeks 8–10 work should be committed
+  and noted by then.
+- Strongest candidates for the final three analyses so far:
+  1. **Injury risk:** binomial GLM (04a–04e, 05a, 05b), then a GLMM (11a).
+  2. **Ashford goals:** Poisson GLM with the 8–0 sensitivity analysis (05e),
+     goals conceded (06a), opponent GLMM (11b).
+  3. **Ashford results:** venue × result table (06e) and/or the ordinal model
+     (10a), or a player contingency-table analysis (08a/08b).
+- The full project brief overrides this plan when it is released.
 
 ## Workspace rules
 

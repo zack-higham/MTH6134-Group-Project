@@ -10,6 +10,9 @@
 *_files/
 *.knit.md
 
+# Default plot device file, made when a script plots without png() first
+Rplots.pdf
+
 # OS clutter
 .DS_Store
 Thumbs.db

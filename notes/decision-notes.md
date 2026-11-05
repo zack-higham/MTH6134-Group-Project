@@ -521,3 +521,224 @@ Keep the final injury model unchanged, and keep all players in the data (nothing
 **Outputs saved**
 outputs/injury_grouped_obs_vs_fitted.csv, outputs/injury_grouped_fit.png, outputs/injury_grouped_age_band_gof.csv, outputs/injury_grouped_age_band_cells.csv, outputs/injury_grouped_age_band_or.csv
 
+
+---
+
+## Week 5 — Residuals and diagnostics
+
+### 20/10/2026 — Poisson goals model: influence of the 8–0 match (Zack, `05e`)
+**Model:** `goals_scored ~ home_away + opponent_rank`, Poisson, log link, all 46
+matches. goals_scored is a count, and every row is one 90-minute match, so no
+offset is needed.
+
+**Fit on all 46 matches:**
+- Away v home: rate ratio 0.50 (95% CI 0.29 to 0.84), LRT p = 0.009.
+- Opponent rank: rate ratio 1.056 per place (1.017 to 1.098), LRT p = 0.004.
+  From rank 1 to rank 24 this is about 3.5 times as many expected goals.
+
+**Goodness of fit and dispersion:**
+- Deviance 49.8 on 43 df (p = 0.22). Every fitted mean is between 0.4 and 3.0,
+  so the chi-squared approximation is rough and this is a guide only.
+- Pearson dispersion 0.99: no overdispersion. A quasipoisson fit gives the same
+  conclusions (standard errors × 0.995), so a negative binomial model is not
+  needed.
+
+**Residuals:** no curvature or funnelling. Two matches have |standardised
+deviance residual| > 2: the 8–0 (+2.61) and a 0–0 home draw v rank 18 (−2.15).
+Neither exceeds 3, and about two values beyond ±2 are expected in 46 matches.
+
+**Leverage and influence:**
+- Average leverage p/n = 0.065. The 8–0 has the highest leverage (0.162),
+  followed by the 2–0 home win v rank 23 (0.136).
+- Cook's distance: 0.64 for the 8–0; every other match is below 0.08.
+
+**Refit without the 8–0 (sensitivity fit; the match stays in the data):**
+
+| Term | All 46 matches | Without the 8–0 |
+|---|---|---|
+| Away v home, rate ratio (95% CI) | 0.50 (0.29 to 0.84), p = 0.009 | 0.59 (0.33 to 1.02), p = 0.058 |
+| Opponent rank, rate ratio per place | 1.056 (1.017 to 1.098), p = 0.004 | 1.034 (0.993 to 1.078), p = 0.10 |
+| Pearson dispersion | 0.99 | 0.78 |
+
+The directions don't change, but the evidence for both terms goes from strong to
+weak. Leaving out each of the other 45 matches in turn keeps both p-values below
+0.05, so the 8–0 is the only match the conclusions depend on.
+
+**Decision:** keep the 8–0 in the data. There is no evidence it is an error; it
+is a genuine result. Report the main fit on all 46 matches with the without-8–0
+fit alongside as a sensitivity analysis, and say that the strength of evidence
+for both effects rests heavily on this one match. This settles the week 2 item
+"influence to be checked in week 5" (see 12/10/2026 — The 8–0 match).
+**Alternatives considered:** deleting the match (no justification);
+quasipoisson or negative binomial (not needed, dispersion ≈ 1).
+**Caveat:** the matches are paired by opponent (each side played home and
+away), which this model doesn't account for.
+
+**Outputs:** `goals_poisson_rate_ratios.csv`, `goals_diagnostics_table.csv`,
+`goals_residuals.png`, `goals_leverage_cooks.png`, `goals_8nil_influence.csv`,
+`goals_8nil_fit_summary.csv`, `goals_8nil_fitted_curves.png`,
+`goals_8nil_predictions.csv`, `goals_leave_one_out.csv`,
+`goals_poisson_vs_quasi.csv`.
+
+### 26/10/2026 — Ashford win model diagnostics (Vish, `05c`)
+*Written up by Zack (05/11) from the comments in `05c`. Vish to check and
+reword.*
+
+**Model:** `win ~ home_away + opponent_rank` from `04e` (binomial, logit link,
+46 matches, 22 wins).
+
+**Residual plots:** residuals v fitted fall in two bands because the response is
+0 or 1, so the smoothed curve isn't informative. The Q-Q plot can't be used to
+check normality for binary data.
+
+**Leverage:** average leverage p/n = 3/46 = 0.065; 19 matches are above it.
+Match 1 (home v the rank-1 side) has the highest leverage.
+
+**Cook's distance:** all matches are below 0.1, well under the 2p/n = 0.13
+rule of thumb used in the script. No single match strongly distorts the
+estimates. The largest is match 27 (2–1 away win v rank 6, Cook's distance
+0.097).
+
+**Refit without match 27** (odds ratios with 95% Wald CIs):
+
+| Term | All 46 matches | Without match 27 |
+|---|---|---|
+| Away v home | 0.205 (0.055 to 0.762) | 0.157 (0.038 to 0.640) |
+| Opponent rank, per place | 1.092 (0.993 to 1.202) | 1.113 (1.005 to 1.233) |
+
+Both effects get slightly stronger without match 27, and the CI for opponent
+rank no longer includes 1.
+*[Zack check, 05/11]:* the LRT for opponent rank goes from p = 0.059 (all
+matches) to p = 0.029 without match 27. So, like the 8–0 in the goals model,
+one match decides whether the rank effect counts as weak or moderate evidence,
+here in the other direction. Worth a sentence in the report if the win model is
+used.
+
+**The 8–0 match (row 8):** leverage 0.077 (above average, because the opponent
+is rank 24) but Cook's distance only 0.006. The response is win/not win, so an
+8–0 counts the same as a 1–0 and can't distort the win model the way it does
+the goals model.
+
+**Decision:** keep the win model and all 46 matches unchanged; report the
+match 27 refit as a sensitivity check.
+**Note for the report:** `05c` uses Wald CIs (`confint.default`) while `04e`
+uses profile-likelihood CIs (`confint`), so the full-model intervals differ
+slightly (e.g. away 0.055–0.762 here v 0.050–0.723 in `04e`). Use one type
+consistently in the report.
+
+**Outputs:** `win_diagnostics.png`, `win_cooks.png`,
+`win_influence_comparison.csv`.
+
+### 29/10/2026 — Changes to `02` and `04c` after the week 4 check (Vish)
+*Written up by Zack (05/11) from the commits. Vish to check.*
+- `04c`: the comment "p = 0.4 > 0.005" corrected to 0.05; the log(minutes)
+  comment now gives the AIC values (548.8 v 547.3) instead of "identical".
+- `02_linear_model.R`: position explicitly relevelled to GK; the coefficient
+  table, with one written interpretation per term, is now saved by the script
+  as `lm1_coefficients_annotated.csv` (previously saved by hand with DEF as the
+  baseline and the interpretations one row off). The "AIC is high" comment is
+  gone.
+- **Side effects to fix (Vish):**
+  - the script no longer writes `lm1_coefficients.csv`, so the committed copy
+    is from the earlier version of the script;
+  - the drop1 table is written to `outputs/drop1_results.csv` again, not
+    `lm1_drop1_results.csv` (the 15/10 rename), so a run creates a duplicate
+    file under the old name. Change line 52 back to `lm1_drop1_results.csv`;
+  - one comment still says "uses defender as the base position"; it is GK.
+- **`05c` (Vish):** add `source("code/00_load_data.R")` at the top; the
+  script currently fails when run on its own (see the 05/11 workspace check).
+
+### 05/11/2026 — Week 5 tasks not yet done
+- `05a`: residuals, leverage and Cook's distance for the final injury model
+  (the player-level diagnostics; Liha's `05b` covers the grouped goodness of
+  fit).
+- `05d`: diagnostics for the linear model for minutes, in particular the
+  3960-minute ceiling.
+No owner yet.
+
+---
+
+## Week 6
+
+### 26/10/2026 — Home/away × result contingency table (Zack, `06e`)
+**Question:** is Ashford's result (W/D/L) associated with venue, and does that
+hold once opponent strength is allowed for?
+
+**Two-way table (46 matches):**
+
+|  | L | D | W |
+|---|---|---|---|
+| Home | 3 | 5 | 15 |
+| Away | 10 | 6 | 7 |
+
+- Pearson X² = 6.77 on 2 df, p = 0.034. All expected counts ≥ 5.5, so the
+  approximation is reasonable. Evidence that the result distribution differs
+  by venue, mainly wins v losses (draws are close to expected).
+- As a log-linear model: the home_away:result term gives LRT 7.04 on 2 df,
+  p = 0.030. home_away stays in every model because the design fixes 23 home
+  and 23 away matches.
+- Odds ratios, away v home: win rather than loss 0.14 (95% CI 0.02 to 0.62);
+  draw rather than loss 0.36 (0.06 to 2.01), no clear difference.
+- Collapsing D and L into "not win", the log-linear interaction equals the
+  home_away coefficient of a logistic model for win (OR 0.23, venue alone).
+  `04e` gives 0.20 because it also adjusts for opponent rank.
+
+**Three-way table, opponent-rank band × venue × result (exploratory):**
+- Rank bands as in the `04e` grouped check. rank_band:home_away is fixed by
+  design and kept in every model.
+- Three-way interaction: LRT 1.48 on 4 df, p = 0.83, dropped.
+- rank_band:result: LRT 7.97 on 4 df, p = 0.093, dropped (weak evidence only).
+- home_away:result: still needed given rank band (LRT 7.92 on 2 df,
+  p = 0.019), so venue and result are not conditionally independent given
+  opponent strength.
+- **Final model:** `Freq ~ rank_band*home_away + home_away*result`,
+  deviance 9.45 on 8 df (p = 0.31), AIC 76.06 (v 76.09 with all two-way terms).
+- Its independence graph is rank_band — home_away — result, so the venue-result
+  odds ratios are the same whether or not we condition on rank band
+  (collapsibility). Adjusting for rank band in the all-two-way model makes the
+  away effect on wins slightly stronger (OR 0.10), not weaker.
+- 16 of 18 expected counts are below 5, so the three-way p-values are
+  approximate.
+
+**Decision:** report the 2 × 3 venue × result table as the main contingency
+analysis, with the three-way table as support that opponent strength doesn't
+explain the home advantage. Banding throws away information, so the weak
+rank_band:result evidence isn't evidence that rank doesn't matter (`04e`, with
+rank as a number, gave p = 0.059).
+**Alternatives considered:** a logistic model for win only (loses the draw
+category); treating result as ordinal (planned for week 10).
+**Caveats:** small sample; matches paired by opponent; the log-linear model
+ignores the L < D < W ordering.
+
+**Outputs:** `table_venue_result.csv`, `venue_result_tests.csv`,
+`venue_result_odds_ratios.csv`, `venue_win_loglinear_vs_logistic.csv`,
+`venue_result_loglinear_selection.csv`, `table_rank_venue_result.csv`,
+`venue_result_marginal_vs_conditional_or.csv`, `venue_result_by_rank.png`.
+
+### 05/11/2026 — Week 6 Poisson tasks not yet done
+`05e` fits the Poisson model for goals scored. goals_conceded has not been
+modelled yet. No owner yet.
+
+---
+
+### 05/11/2026 — Weeks 5–6 workspace check (Zack)
+- **`run_all.R` changed:** it now clears the global environment before each
+  script. Each script loads the data with `source("code/00_load_data.R")`,
+  which writes to the global environment, so until now a script that forgot
+  the loader still ran on the previous script's data, and the
+  "own environment" check in `run_all.R` didn't catch it.
+- **`05c` fails when run on its own:** it has no
+  `source("code/00_load_data.R")` line, so `matches` doesn't exist
+  ("object 'matches' not found"). It passed before only because of the problem
+  above. **Vish to add the loader line at the top of `05c`.**
+- With that one exception, all numbered scripts run from a fresh session, and
+  re-running them reproduces the committed outputs (the only differences are
+  line endings and the last decimal place). `01b` and `04b` need the tidyverse
+  installed.
+- `05c` also plots to the default device before calling `png()` (lines 8–9),
+  which leaves an `Rplots.pdf` in the project folder when run outside RStudio;
+  `Rplots.pdf` is now in `.gitignore`.
+- The 05c model was refitted independently and the numbers above checked
+  against it.
+- who-did-what: week 5–6 rows added. Rows for other members were written from
+  the commit history and are marked for the owner to check.

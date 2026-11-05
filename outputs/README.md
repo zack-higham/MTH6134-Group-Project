@@ -42,15 +42,16 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 **`02_linear_model.R`** (Vish)
 | File | Contents |
 |---|---|
-| `lm1_coefficients.csv` | Coefficients, SEs, t values, p-values and 95% CIs for `minutes_played ~ position + age + training_load + bmi + prev_injuries` (GK baseline) |
-| `lm1_drop1_results.csv` | F-test `drop1` results for the same model (renamed from `drop1_results.csv`) |
+| `lm1_coefficients_annotated.csv` | Coefficients, SEs, t values, p-values and 95% CIs for `minutes_played ~ position + age + training_load + bmi + prev_injuries` (GK baseline), with a written interpretation of each term. Script-generated since 29/10; before that it was saved by hand with DEF as the baseline |
+| `drop1_results.csv` | F-test `drop1` results for the same model. Since 29/10 the script writes this name again; the committed copy is `lm1_drop1_results.csv` (renamed 15/10). To be fixed in the script (Vish) |
 | `lm1_residuals.png` | The four residual plots for the same model |
 
-**Saved by hand** (Vish, from his original week 2 file, `code/drafts/02_linear_model_draft.R`; no script recreates these)
+**No longer made by any script** (kept)
 | File | Contents |
 |---|---|
-| `lm1_coefficients_annotated.csv` | Vish's coefficient table with his written interpretation of each term, R², AIC and the training_load factor test. Defender is the baseline position here, so position effects differ from `lm1_coefficients.csv` (GK baseline). Originally committed as `lm1_coefficients.csv`. |
-| `lm1_residuals_vs_fitted.png` | Residuals vs fitted for the linear model *(not script-generated; renamed from `Plot of lm1 (mins played = pos + age + training+ bmi + prev_injuries).png`)* |
+| `lm1_coefficients.csv` | The same coefficient table without interpretations, saved by `02` before its 29/10 update |
+| `lm1_drop1_results.csv` | The committed drop1 table (see `drop1_results.csv` above) |
+| `lm1_residuals_vs_fitted.png` | Residuals vs fitted for the linear model, saved by hand from Vish's original week 2 file *(renamed from `Plot of lm1 (mins played = pos + age + training+ bmi + prev_injuries).png`)* |
 
 ## Week 3 — GLMs
 
@@ -100,3 +101,49 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 | `injury_predicted_probabilities.csv` | Predicted injury probability and 95% CI by previous injuries × training load, at age 25 |
 | `injury_prob_by_prev_injuries.png` | Predicted injury probability against previous injuries, one line per training load |
 
+
+## Week 5 — Residuals and diagnostics
+
+**`05b_injury_grouped_gof.R`** (Liha)
+| File | Contents |
+|---|---|
+| `injury_grouped_obs_vs_fitted.csv` | Observed v expected injuries in each training_load × prev_injuries cell, with Pearson residuals and small-cell flags |
+| `injury_grouped_fit.png` | Observed v fitted injury proportion by cell |
+| `injury_grouped_age_band_gof.csv` | Deviance and Pearson goodness-of-fit tests for the grouped model with age in bands |
+| `injury_grouped_age_band_cells.csv` | Cell counts and fitted values for the age-band grouped model |
+| `injury_grouped_age_band_or.csv` | Odds ratios and 95% CIs from the age-band grouped model |
+
+**`05c_win_diagnostics.R`** (Vish)
+| File | Contents |
+|---|---|
+| `win_diagnostics.png` | The four standard residual plots for the win model |
+| `win_cooks.png` | Cook's distance for each match |
+| `win_influence_comparison.csv` | Odds ratios and 95% Wald CIs with and without match 27 (the largest Cook's distance) |
+
+**`05e_goals_influence.R`** (Zack)
+| File | Contents |
+|---|---|
+| `goals_poisson_rate_ratios.csv` | Rate ratios and 95% CIs for `goals_scored ~ home_away + opponent_rank` |
+| `goals_diagnostics_table.csv` | Fitted values, standardised deviance and Pearson residuals, leverage and Cook's distance for every match |
+| `goals_residuals.png` | Residuals v fitted, v opponent rank, and normal Q-Q |
+| `goals_leverage_cooks.png` | Leverage and Cook's distance by match |
+| `goals_8nil_influence.csv` | Rate ratios, CIs and LRT p-values with and without the 8–0 |
+| `goals_8nil_fit_summary.csv` | Deviance, df and Pearson dispersion with and without the 8–0 |
+| `goals_8nil_fitted_curves.png` | Fitted expected goals against opponent rank, with and without the 8–0 |
+| `goals_8nil_predictions.csv` | Expected goals at ranks 1, 12 and 24, home and away, with and without the 8–0 |
+| `goals_leave_one_out.csv` | Rate ratios, LRT p-values and Cook's distance after leaving out each match in turn |
+| `goals_poisson_vs_quasi.csv` | Standard errors under Poisson and quasipoisson |
+
+## Week 6
+
+**`06e_venue_result_table.R`** (Zack)
+| File | Contents |
+|---|---|
+| `table_venue_result.csv` | Home/away × W/D/L counts with expected counts and Pearson residuals |
+| `venue_result_tests.csv` | Pearson chi-squared and log-linear likelihood ratio tests of association |
+| `venue_result_odds_ratios.csv` | Odds ratios (W v L, D v L, away v home) with 95% CIs |
+| `venue_win_loglinear_vs_logistic.csv` | The log-linear interaction for win/not win v the logistic home_away coefficient |
+| `table_rank_venue_result.csv` | Three-way table, rank band × venue × result, with fitted values and residuals |
+| `venue_result_loglinear_selection.csv` | Log-linear model selection for the three-way table |
+| `venue_result_marginal_vs_conditional_or.csv` | Venue-result odds ratios: marginal v conditional on rank band |
+| `venue_result_by_rank.png` | Result proportions by venue, overall and within rank bands |

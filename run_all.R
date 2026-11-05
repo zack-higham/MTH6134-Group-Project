@@ -14,6 +14,13 @@ results <- data.frame(script = basename(scripts), status = "", message = "",
 
 for (i in seq_along(scripts)) {
   cat("\n==== Running", scripts[i], "====\n")
+  # Clear the global environment before each script (05/11/2026). Each script
+  # loads the data with source("code/00_load_data.R"), which writes to the
+  # global environment, so without this a script that forgot the loader would
+  # still run using the previous script's data.
+  rm(list = setdiff(ls(globalenv(), all.names = TRUE),
+                    c("scripts", "results", "i")),
+     envir = globalenv())
   res <- tryCatch({
     source(scripts[i], local = new.env(), echo = FALSE)
     c("OK", "")

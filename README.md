@@ -20,7 +20,7 @@ Analysis of the fictional Midland Premier League 2023/24 season.
 
 ## How to run
 1. Open `MTH6134-project.Rproj` in RStudio (this sets the working directory to the project folder).
-2. Restart R, then run `source("run_all.R")`. It runs every script in `code/` in numerical order and lists any that fail.
+2. Restart R, then run `source("run_all.R")`. It runs every script in `code/` in numerical order, clears the global environment before each one (so a script that forgets to load the data fails instead of borrowing the previous script's), and lists any that fail.
 3. Or run scripts one at a time in numerical order. Every script starts with `source("code/00_load_data.R")`.
 
 All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selection.R`, which load the tidyverse (`install.packages("tidyverse")` once before running them).
@@ -42,6 +42,10 @@ All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selecti
 | `04c_injury_extensions.R` | 4 | age², interactions, exposure, link functions |
 | `04d_grouped_binomial.R` | 4 | Grouped binomial, goodness of fit, team effect |
 | `04e_ashford_wins_and_predictions.R` | 4 | Ashford win model, predicted-probability plots |
+| `05b_injury_grouped_gof.R` | 5 | Grouped goodness of fit for the final injury model (Liha) |
+| `05c_win_diagnostics.R` | 5 | Residuals, leverage and Cook's distance for the Ashford win model (Vish) |
+| `05e_goals_influence.R` | 5 | Poisson goals model: diagnostics and influence of the 8–0 match |
+| `06e_venue_result_table.R` | 6 | Home/away × result contingency table and log-linear models |
 | `drafts/` | 2 | Superseded drafts, kept but not run |
 | `run_all.R` (project root) | — | Runs all scripts in order and reports failures |
 
@@ -49,8 +53,8 @@ All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selecti
 - [x] Week 2 — Exploration + normal linear regression
 - [x] Week 3 — Responses vs explanatory variables
 - [x] Week 4 — Binomial regression
-- [ ] Week 5 — Residuals and diagnostics (workspace link due end of week 5)
-- [ ] Week 6 — Poisson regression
+- [x] Week 5 — Residuals and diagnostics (05b, 05c, 05e done; 05a injury-model residuals and 05d linear-model ceiling still open)
+- [ ] Week 6 — Poisson regression (goals scored done in 05e; goals conceded still open). 06e (contingency table) done early
 - [ ] Week 8 — Contingency tables I
 - [ ] Week 9 — Contingency tables II
 - [ ] Week 10 — Specialised models

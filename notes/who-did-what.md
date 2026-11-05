@@ -35,3 +35,19 @@ Members: Yousuf, Liha, Vish, Liri, Zack
 | 15/10/2026 | Zack | Workspace tidy-up: removed the `code/drafts/` folder (Vish's original week 2 file and the old starter), both superseded by `02_linear_model.R` and kept in git history at commit `6fc4269` (restored 19/10, see below) | `code/drafts/` |
 | 19/10/2026 | Zack | Edit only, not analysis: renamed Yousuf's week 4 script to `04a_injury_logistic.R` and made it run (data loader added, `league_players` → `players`); added a marked [Zack] section with drop1 tests and term-by-term interpretation for Yousuf to review. The model is Yousuf's; his original is in git history (commit `8144dbc`) | `code/04a_injury_logistic.R`, `outputs/injury_full_odds_ratios.csv` |
 | 19/10/2026 | Zack | Workspace upkeep for weeks 2–4: restored `code/drafts/`; wrote up the 04a, 04b and 04c decisions in decision notes from each script (owners to check); corrected the 15/10 tidy-up note; updated README, project status and outputs README; refitted every model to check the notes and ran all scripts from a fresh session | `code/drafts/`, `notes/`, `README.md`, `outputs/README.md` |
+| 29/10/2026 | Vish | Week 4 check fixes: corrected the two `04c` comments (0.005 → 0.05; log(minutes) AIC 548.8 vs 547.3 written out); `02_linear_model.R` now sets GK as the baseline and writes `lm1_coefficients_annotated.csv` from code, with one interpretation per term on the right row *(row added by Zack from the commit history, 05/11; Vish to check)* | `code/02_linear_model.R`, `code/04c_injury_extensions.R`, `outputs/lm1_coefficients_annotated.csv` |
+
+## Week 5 — Residuals and diagnostics
+
+| Date | Member | Work done | Files |
+|---|---|---|---|
+| 20/10/2026 | Zack | Diagnostics for the Poisson goals-scored model and the influence of the 8–0 match: goodness of fit, dispersion, standardised residuals, leverage, Cook's distance, refit without the 8–0, leave-one-out refit of every match, quasipoisson check | `code/05e_goals_influence.R`, `outputs/goals_*` |
+| 26/10/2026 | Liha | Grouped goodness-of-fit check for the final injury model (training_load × prev_injuries cells), with an optional grouped refit using age bands; decision note *(row added by Zack from the commit history, 05/11; Liha to check)* | `code/05b_injury_grouped_gof.R`, `outputs/injury_grouped_*`, `notes/decision-notes.md` |
+| 26/10/2026 | Vish | Diagnostics for the Ashford win model: residual plots, leverage, Cook's distance, refit without the most influential match (27) and the leverage/Cook's distance of the 8–0. Updated 29/10 to report odds ratios with 95% CIs *(row added by Zack from the commit history, 05/11; Vish to check)* | `code/05c_win_diagnostics.R`, `outputs/win_diagnostics.png`, `outputs/win_cooks.png`, `outputs/win_influence_comparison.csv` |
+
+## Week 6
+
+| Date | Member | Work done | Files |
+|---|---|---|---|
+| 26/10/2026 | Zack | Home/away × result (W/D/L) contingency table: chi-squared test, the same test as a log-linear model, odds ratios with 95% CIs, link to the binomial win model, exploratory three-way table with opponent-rank band (model selection, conditional independence, collapsibility), stacked bar plot | `code/06e_venue_result_table.R`, `outputs/table_*`, `outputs/venue_*` |
+| 05/11/2026 | Zack | Workspace upkeep for weeks 5–6: added the week 5–6 rows above (others' rows from the commit history, for owners to check); wrote up the 05c, 05e and 06e decisions and Vish's 29/10 changes in decision notes; updated README, outputs README and project status; fixed `run_all.R` so it clears the global environment before each script (it had let `05c` pass without loading the data); added `Rplots.pdf` to `.gitignore`; refitted the 05c model to check the notes and ran all scripts from a fresh session | `run_all.R`, `notes/`, `README.md`, `outputs/README.md`, `.gitignore` |
