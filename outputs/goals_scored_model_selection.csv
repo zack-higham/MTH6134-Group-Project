@@ -1,0 +1,13 @@
+"data","step","model","n_par","deviance","resid_df","AIC","compared_with","LRT","LRT_df","p_value"
+"All 46","Main effects (final)","home_away + opponent_rank",3,49.785,43,133.43,NA,NA,NA,NA
+"All 46","Add interaction","home_away + opponent_rank + home_away:opponent_rank",4,49.423,42,135.07,"Main effects",0.361,1,0.548
+"All 46","Log rank instead of linear","home_away + log(opponent_rank)",3,52.402,43,136.05,"not nested: compare AIC",NA,NA,NA
+"All 46","Both rank forms (test log given linear)","home_away + opponent_rank + log(opponent_rank)",4,49.025,42,134.67,"Main effects",0.76,1,0.383
+"All 46","Both rank forms (test linear given log)","home_away + opponent_rank + log(opponent_rank)",4,49.025,42,134.67,"Log rank",3.377,1,0.0661
+"Without 8-0 (45)","Main effects (final)","home_away + opponent_rank",3,42.387,42,122.1,NA,NA,NA,NA
+"Without 8-0 (45)","Add interaction","home_away + opponent_rank + home_away:opponent_rank",4,42.352,41,124.06,"Main effects",0.035,1,0.852
+"Without 8-0 (45)","Log rank instead of linear","home_away + log(opponent_rank)",3,42.879,42,122.59,"not nested: compare AIC",NA,NA,NA
+"Without 8-0 (45)","Both rank forms (test log given linear)","home_away + opponent_rank + log(opponent_rank)",4,42.367,41,124.08,"Main effects",0.02,1,0.887
+"Without 8-0 (45)","Both rank forms (test linear given log)","home_away + opponent_rank + log(opponent_rank)",4,42.367,41,124.08,"Log rank",0.512,1,0.474
+"All 46","Final model: drop home_away","opponent_rank",2,56.58,44,138.23,"Main effects",6.796,1,0.00914
+"All 46","Final model: drop opponent_rank","home_away",2,58.048,44,139.7,"Main effects",8.263,1,0.00405

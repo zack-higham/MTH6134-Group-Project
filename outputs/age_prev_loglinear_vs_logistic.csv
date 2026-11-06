@@ -1,0 +1,8 @@
+"quantity","loglinear_term","logistic_term","loglinear_est","logistic_est","loglinear_se","logistic_se","OR","OR_lower_95","OR_upper_95","abs_difference"
+"intercept (log odds, <=22 and 0 previous)","injured1","(Intercept)",-2.62635,-2.62635,0.29504,0.29504,0.072,0.039,0.125,0
+"age 23-26 v <=22","age_band23-26:injured1","age_band23-26",0.29341,0.29341,0.30667,0.30667,1.341,0.744,2.489,0
+"age 27-30 v <=22","age_band27-30:injured1","age_band27-30",0.83273,0.83273,0.31616,0.31616,2.3,1.251,4.346,0
+"age 31+ v <=22","age_band31+:injured1","age_band31+",1.29801,1.29801,0.39352,0.39352,3.662,1.688,7.958,0
+"prev 1 v 0","prev_band1:injured1","prev_band1",0.71075,0.71075,0.27374,0.27374,2.036,1.19,3.492,0
+"prev 2 v 0","prev_band2:injured1","prev_band2",1.15098,1.15098,0.30217,0.30217,3.161,1.742,5.718,0
+"prev 3+ v 0","prev_band3+:injured1","prev_band3+",1.80559,1.80559,0.33211,0.33211,6.084,3.17,11.707,0
