@@ -1,3 +1,5 @@
+source("code/00_load_data.R")
+
 #From 04e. model evaluates log odds of winning a match 
 # As a function of playing location and opponent rank is a covariate, accounting for opposition quality.
 matches$win <- as.integer(matches$result == "W")
