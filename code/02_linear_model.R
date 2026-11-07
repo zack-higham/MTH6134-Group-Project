@@ -18,7 +18,7 @@ source("code/00_load_data.R")
 #1.Re level position so Goalkeeper (GK) is the reference baseline category
 players$position <- relevel(factor(players$position), ref = "GK")
 
-#2.fits the lm to all the variables given. uses defender as the base position to compare to. 
+#2.fits the lm to all the variables given. uses GK as the base position to compare to. 
 lm1 = lm(minutes_played ~ position + age + training_load + bmi + prev_injuries, data = players)
 
 #creates a summary of lm1 & exports it to Excel.
@@ -49,7 +49,7 @@ write.csv(coef_summary, "outputs/lm1_coefficients_annotated.csv", row.names = FA
 drop_results = drop1(lm1, test = "F")
 AIC(lm1)
 #Position & training load are the only variables with statistical significance, drop the rest. 
-write.csv(drop_results, "outputs/drop1_results.csv", row.names = TRUE)
+write.csv(drop_results, "outputs/lm1_drop1_results.csv", row.names = TRUE)
 #creating the lm with the 2 variables of statistical significance. 
 lm2 = lm(minutes_played ~ position + training_load, data = players)
 summary(lm2)
@@ -78,5 +78,4 @@ lm_bmi = lm(bmi ~ position + age + training_load + prev_injuries + injured, data
 summary(lm_bmi)
 drop1(lm_bmi, test = "F")
 AIC(lm_bmi)
-#0 variables of statistical significance, bmi is better as an explanatory variable. 
-
+#0 variables of statistical significance, BMI is better as an explanatory variable. 
