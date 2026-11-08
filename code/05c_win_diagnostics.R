@@ -43,7 +43,7 @@ m_win_no27 = update(m_win, subset = -27)
 # Helper function to extract Odds Ratios and 95% Confidence Intervals
 get_or_ci = function(model) {
   or = exp(coef(model))
-  ci = exp(confint.default(model))
+  ci = exp(confint(model))
   sprintf("%.3f (%.3f, %.3f)", or, ci[, 1], ci[, 2])
 }
 
