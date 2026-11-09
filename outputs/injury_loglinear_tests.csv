@@ -1,0 +1,5 @@
+"test","deviance","df","p_value"
+"three-way prev_band:load_band:injured",2.59115802852494,2,0.273739319465836
+"prev_band:load_band in all-two-way model",0.439690368341779,2,0.80264305019342
+"injured:load_band given prev_band",11.3910794435109,1,0.000737976349304111
+"injured:prev_band given load_band",29.1901400812567,2,4.58607991584745e-07

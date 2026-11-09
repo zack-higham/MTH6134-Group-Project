@@ -695,6 +695,66 @@ analysis.
 
 ## Week 6
 
+### 09/11/2026 — Injury × previous injuries × training load (Liri, `06d`)
+
+**Bands:** previous injuries were grouped as 0, 1 and 2+; training load was
+grouped as 1–3 and 4–5. These are the group-agreed cut points: counts for 3 and
+4 previous injuries are too small separately, while the training split follows
+the exploratory difference seen in `01a`. The original variables and shared
+data loader were not changed.
+
+**Log-linear selection:** the saturated model was fitted to the 3 × 2 × 2
+table. The three-way interaction was not supported (G² = 2.59 on 2 df,
+p = 0.274), so it was dropped. In the all-two-way model:
+
+- injury × training load remained necessary given previous injuries
+  (G² = 11.39 on 1 df, p = 0.00074);
+- injury × previous injuries remained necessary given training load
+  (G² = 29.19 on 2 df, p < 0.000001);
+- previous injuries × training load was weak (G² = 0.44 on 2 df, p = 0.803),
+  but was retained because their joint margin is fixed when injury is treated
+  as the response.
+
+**Final model:** all three pairwise interactions, but no three-way interaction:
+`Freq ~ prev_band*load_band + prev_band*injured + load_band*injured`.
+Residual deviance was 2.59 on 2 df (p = 0.274), and every absolute Pearson
+residual was below 0.74, giving no evidence of lack of fit.
+
+The equivalent grouped binomial model is
+`cbind(injured, not_injured) ~ prev_band + load_band`. Its coefficients equal
+the injury interactions in the log-linear model to numerical precision. The
+conditional odds ratios were:
+
+| Comparison | Odds ratio | 95% CI |
+|---|---:|---:|
+| Previous injuries: 1 v 0 | 2.00 | 1.17–3.41 |
+| Previous injuries: 2+ v 0 | 3.91 | 2.37–6.51 |
+| Training load: 4–5 v 1–3 | 2.07 | 1.36–3.15 |
+
+Thus higher previous-injury and training-load bands are associated with higher
+odds of current injury; this is observational evidence and not a causal claim.
+
+**Graph and collapsibility:** the retained pairwise terms give a complete
+triangle among previous injuries, training load and injury. The graph therefore
+does not encode the conditional-independence condition needed for exact
+collapsibility; omission of the three-way interaction itself is not represented
+by a missing edge. Nevertheless, the predictor-band association is weak
+(Pearson X² = 1.52 on 2 df, p = 0.468), and marginal and conditional odds
+ratios differed by at most about 1.5%. They are approximately, but not
+guaranteed exactly, collapsible in these data.
+
+**Comparison with `04b`:** a banded version of the `04b` model retaining age
+gave ORs 2.03, 3.98 and 2.06 for the three comparisons above, almost identical
+to the table model's 2.00, 3.91 and 2.07. Small differences arise because the
+table model omits age and because banding discards within-band information. The
+original `04b` per-unit odds ratios are not directly comparable with band odds
+ratios.
+
+**Outputs:** `table_prev_load_injured.csv`, `injury_loglinear_tests.csv`,
+`loglinear_obs_vs_fitted.csv`, `loglinear_binomial_equivalence.csv`,
+`injury_loglinear_odds_ratios.csv`, `injury_marginal_vs_conditional_or.csv`,
+`injury_banded_04b_comparison.csv`, and `independence_graph_injury.png`.
+
 ### 26/10/2026 — Home/away × result contingency table (Zack, `06e`)
 **Question:** is Ashford's result (W/D/L) associated with venue, and does that
 hold once opponent strength is allowed for?

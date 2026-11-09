@@ -145,6 +145,18 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 
 ## Week 6
 
+**`06d_injury_loglinear.R`** (Liri)
+| File | Contents |
+|---|---|
+| `table_prev_load_injured.csv` | The 3 × 2 × 2 previous-injury band × training-load band × injury table |
+| `injury_loglinear_tests.csv` | LRTs for the three-way interaction, predictor association and the two conditional-independence hypotheses |
+| `loglinear_obs_vs_fitted.csv` | Observed and fitted cell counts with Pearson and deviance residuals for the final model |
+| `loglinear_binomial_equivalence.csv` | Matching log-linear injury interactions and grouped-binomial coefficients |
+| `injury_loglinear_odds_ratios.csv` | Conditional odds ratios with 95% profile-likelihood CIs |
+| `injury_marginal_vs_conditional_or.csv` | Marginal and conditional odds ratios used for the collapsibility check |
+| `injury_banded_04b_comparison.csv` | Table-model odds ratios compared with a banded, age-adjusted version of `04b` |
+| `independence_graph_injury.png` | Independence graph for the retained pairwise interactions |
+
 **`06e_venue_result_table.R`** (Zack)
 | File | Contents |
 |---|---|

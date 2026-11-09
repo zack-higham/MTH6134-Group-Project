@@ -1,0 +1,5 @@
+"binomial_term","loglinear_term","binomial_estimate","loglinear_estimate","absolute_difference"
+"(Intercept)","injured1",-2.41356496130216,-2.41356496130216,4.44089209850063e-16
+"prev_band1","prev_band1:injured1",0.690991035781176,0.690991035781177,1.66533453693773e-15
+"prev_band2+","prev_band2+:injured1",1.36254604581782,1.36254604581782,1.77635683940025e-15
+"load_band4-5","load_band4-5:injured1",0.726180678979063,0.726180678979063,0
