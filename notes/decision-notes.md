@@ -656,6 +656,41 @@ consistently in the report.
   3960-minute ceiling.
 No owner yet.
 
+### 09/11/2026 — Grouped binomial diagnostics (Liri, `05d`)
+
+**Team-level model.** Standardised deviance residuals were calculated for the
+24 team groups from the intercept-only grouped binomial model in `04d`.
+Grantwick was the only team outside ±2: 12 injuries among 27 players (44.4%),
+with a standardised residual of 3.54. No team was below −2. The overall model
+still has residual deviance 24.12 on 23 df (p = 0.397), so one conspicuous team
+does not amount to evidence of general overdispersion across all clubs.
+
+**Decision:** retain every team. Grantwick is a genuine observed group, not a
+recording error, and removing it just because its injury rate is high would be
+unjustified. Its residual supports revisiting team heterogeneity with the
+planned random-intercept GLMM in week 11, even though the week 4 overall test
+did not detect extra-binomial variation.
+
+**Position × training-load cells.** The 620 players were grouped into all 20
+position-by-training-load cells. The additive grouped model
+`cbind(injured, not_injured) ~ position + training_load` has five parameters,
+so average leverage is p/n = 5/20 = 0.25. No standardised deviance residual
+exceeded ±2 and no cell exceeded the common 2p/n leverage rule (0.50). The QQ
+plot was reasonably straight and the residual-versus-fitted plot showed no
+clear curvature or funnel pattern.
+
+The largest Cook's distance was 0.122 for MID/load 2 (3 injuries among 42
+players), which is not a small cell. A sensitivity refit without that cell
+reduced the training-load odds ratio from 1.40 (95% CI 1.14–1.72) to 1.33
+(1.07–1.65); the positive association remained. All position confidence
+intervals included 1 in both fits. **Decision:** the substantive conclusions
+do not depend on the most influential cell, so all cells remain in the main
+analysis.
+
+**Outputs:** `team_grouped_diagnostics.csv`, `team_residuals.png`,
+`position_load_cell_diagnostics.csv`, `position_load_diagnostics.png`, and
+`position_load_influence_comparison.csv`.
+
 ---
 
 ## Week 6

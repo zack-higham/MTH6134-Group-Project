@@ -44,6 +44,7 @@ Members: Yousuf, Liha, Vish, Liri, Zack
 | 20/10/2026 | Zack | Diagnostics for the Poisson goals-scored model and the influence of the 8–0 match: goodness of fit, dispersion, standardised residuals, leverage, Cook's distance, refit without the 8–0, leave-one-out refit of every match, quasipoisson check | `code/05e_goals_influence.R`, `outputs/goals_*` |
 | 26/10/2026 | Liha | Grouped goodness-of-fit check for the final injury model (training_load × prev_injuries cells), with an optional grouped refit using age bands; decision note *(row added by Zack from the commit history, 05/11; Liha to check)* | `code/05b_injury_grouped_gof.R`, `outputs/injury_grouped_*`, `notes/decision-notes.md` |
 | 26/10/2026 | Vish | Diagnostics for the Ashford win model: residual plots, leverage, Cook's distance, refit without the most influential match (27) and the leverage/Cook's distance of the 8–0. Updated 29/10 to report odds ratios with 95% CIs *(row added by Zack from the commit history, 05/11; Vish to check)* | `code/05c_win_diagnostics.R`, `outputs/win_diagnostics.png`, `outputs/win_cooks.png`, `outputs/win_influence_comparison.csv` |
+| 09/11/2026 | Liri | Diagnostics for grouped binomial models: team residuals, position × training-load residual/QQ/leverage/Cook checks, and sensitivity refit without the most influential cell | `code/05d_grouped_diagnostics.R`, `outputs/team_grouped_diagnostics.csv`, `outputs/team_residuals.png`, `outputs/position_load_*`, `notes/decision-notes.md` |
 
 ## Week 6
 

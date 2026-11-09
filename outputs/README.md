@@ -120,6 +120,15 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 | `win_cooks.png` | Cook's distance for each match |
 | `win_influence_comparison.csv` | Odds ratios and 95% Wald CIs with and without match 27 (the largest Cook's distance) |
 
+**`05d_grouped_diagnostics.R`** (Liri)
+| File | Contents |
+|---|---|
+| `team_grouped_diagnostics.csv` | Team injury counts, fitted rates, standardised deviance and Pearson residuals, leverage, Cook's distance and residual flags |
+| `team_residuals.png` | Index plot of standardised deviance residuals for all 24 teams |
+| `position_load_cell_diagnostics.csv` | Observed and fitted rates plus residual, leverage and influence diagnostics for the 20 position × training-load cells |
+| `position_load_diagnostics.png` | Residual-v-fitted, QQ, leverage and Cook's-distance plots for the grouped cell model |
+| `position_load_influence_comparison.csv` | Coefficients, odds ratios and 95% Wald CIs with and without the cell having the largest Cook's distance |
+
 **`05e_goals_influence.R`** (Zack)
 | File | Contents |
 |---|---|
