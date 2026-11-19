@@ -837,3 +837,176 @@ modelled yet. No owner yet.
   against it.
 - who-did-what: week 5–6 rows added. Rows for other members were written from
   the commit history and are marked for the owner to check.
+
+---
+
+## Weeks 5–8: entries added 19/11/2026
+
+Entries for other members' work were written up by Zack from their scripts
+and commits, and are marked for the owner to check. Each owner should correct
+anything that doesn't match what they decided.
+
+### 08/11/2026 — Minutes linear model: the 3960 ceiling (Vish, `05d_minutes_diagnostics.R`) *(written up by Zack from the script; Vish to check)*
+- **Model:** `lm1` from `02` (GK baseline), unchanged.
+- **Residuals:** the Q-Q plot is S-shaped (heavier tails than normal). The 16
+  players at the 3960-minute ceiling (12 GKs) are highlighted; their minutes
+  are capped, so the data are censored at 3960 and the normality assumption
+  doesn't hold at the top end.
+- **Influence:** two players have Cook's distance > 0.02 and neither is at
+  the ceiling: row 531 (a GK with 1,705 minutes) and row 43 (a FWD with 105
+  minutes). Unusual usage, not errors; kept.
+- **Sensitivity:** refit without the 16 ceiling players. Position effects
+  shrink (v GK: DEF −580 → −452, MID −902 → −764, FWD −1202 → −1055 minutes);
+  training_load is almost unchanged (+145 → +142 per level); age, bmi and
+  prev_injuries still have CIs that include 0.
+- **Decision:** keep all players in `lm1`; the ceiling is a limitation of the
+  linear model. Dropping ceiling players is a sensitivity check only, because
+  it removes the highest values and so biases the position effects towards 0.
+- **Follow-up:** a model for censored data (e.g. Tobit, `survival::survreg`)
+  is the natural "specialised model" for week 10 (`10b`).
+- Note: two scripts now start with `05d` (this one and Liri's grouped
+  diagnostics). Both run; the names just don't follow the one-letter-per-task
+  rule.
+
+### 07–08/11/2026 — Fixes after the week 5–6 check (Vish)
+- `05c` now loads the data itself, so it runs on its own (checked 19/11).
+- `05c` CIs changed from Wald (`confint.default`) to profile likelihood
+  (`confint`), matching `04e`. The committed `win_influence_comparison.csv`
+  matches the new code.
+- `02`: drop1 table written to `lm1_drop1_results.csv` again; baseline
+  comment corrected to GK. All the 05/11 action points for Vish are closed.
+
+### 06/11/2026 — Goals scored: Poisson model selection (Zack, `06b`)
+**Question:** 05e fitted and diagnosed `goals_scored ~ home_away +
+opponent_rank` but did no model selection. Is that the right model?
+- Poisson, log link, no offset (every row is one 90-minute match).
+- **Interaction home_away:opponent_rank:** LRT 0.36 on 1 df, p = 0.55; AIC
+  133.43 → 135.07. Not needed: the venue effect is taken as the same
+  (multiplicative) at every opponent rank.
+- **Linear v log(opponent_rank):** not nested (same number of parameters), so
+  compared by AIC: 133.43 (linear) v 136.05 (log). In the model containing
+  both, log(rank) adds nothing given linear rank (LRT 0.76, 1 df, p = 0.38);
+  linear given log, LRT 3.38, p = 0.066. **Linear rank kept.**
+- **Final model terms:** home_away LRT 6.80 (1 df, p = 0.009); opponent_rank
+  LRT 8.26 (1 df, p = 0.004). Both kept. Away v home RR 0.50 (95% CI
+  0.29–0.84); rank RR 1.056 per place (1.017–1.098). Same as 05e.
+- **Without the 8–0:** the same model is chosen (interaction p = 0.85), but
+  linear and log rank are now almost tied (AIC 122.10 v 122.59), so the
+  preference for linear rank rests partly on the 8–0. Linear kept for
+  continuity with 04e and 05e.
+- **Caveat:** matches are paired by opponent (see the week 9 plan below).
+
+### 06/11/2026 — Age band × previous-injury band × injured (Zack, `08d`)
+**Question:** with injured as the response, is injury associated with age and
+previous injuries in the 4 × 4 × 2 table, and is the log-linear model the same
+as the grouped logistic model?
+- Age bands as in 05b (≤22, 23–26, 27–30, 31+); previous-injury bands 0, 1,
+  2, 3+. No empty cells; smallest cell n = 3.
+- **injured is the response,** so the age_band × prev_band margin is fixed
+  and `age_band*prev_band` stays in every log-linear model (week 8, slide 40),
+  whatever its p-value.
+- **Equivalence:** `Freq ~ age_band*prev_band + age_band*injured +
+  prev_band*injured` gives exactly the same estimates, SEs and deviance (2.15
+  on 9 df) as `cbind(injured, n − injured) ~ age_band + prev_band`.
+- **Three-way term** (= the age × prev interaction in the logistic model):
+  LRT 2.15 on 9 df, p = 0.99. Dropped. Goodness of fit of the final model:
+  deviance 2.15 on 9 df, p = 0.99; largest |Pearson residual| 0.68.
+- **Two-way terms with injured:** age band LRT 14.91 on 3 df (p = 0.002);
+  prev band LRT 34.34 on 3 df (p < 0.001). Both kept. Independence graph is
+  a triangle, so nothing is collapsible.
+- **Odds ratios** (each adjusted for the other band): age v ≤22: 1.34
+  (0.74–2.49), 2.30 (1.25–4.35), 3.66 (1.69–7.96); previous injuries v 0:
+  2.04 (1.19–3.49), 3.16 (1.74–5.72), 6.08 (3.17–11.71).
+- **Comparison with 04b:** the band ORs rise roughly evenly, consistent with
+  04b's single OR per year (1.11) and per previous injury (1.67), e.g.
+  1.11^12 ≈ 3.5 v 3.66 here. **Decision:** 04b's numeric terms describe these
+  data well with fewer parameters; 08d supports the 04b model rather than
+  replacing it.
+- **Caveats:** several expected counts < 5; banding loses information;
+  training_load not included.
+
+### 09/11/2026 — Final injury model diagnostics and position × injury (Yousuf, `code/Week4 and Week5.R`) *(written up by Zack from the script; Yousuf to check)*
+**Status:** the script doesn't run from a fresh session. It uses
+`league_players`, but `00_load_data.R` creates `players`, and the grouped
+logistic model in section 3 uses `injury_counts`, which is never created. Its
+name doesn't start with a number, so `run_all.R` skips it, and none of its
+outputs are committed. The numbers below were checked by running a temporary
+copy with those two lines fixed (not committed); they match Yousuf's comments.
+
+**Part 1 = the open `05a` task (player-level diagnostics, final injury model
+`injured ~ age + training_load + prev_injuries`):**
+- 26 players have |standardised deviance residual| > 2. All 26 were injured
+  with fitted probabilities 4–13%.
+- 54 players have leverage above 2p/n = 0.013.
+- Largest Cook's distances are all small (0.022–0.025), rows 238, 281, 546,
+  169, 101; all injured, low fitted probability.
+- Refit without those five: ORs age 1.11 → 1.14, training_load 1.38 → 1.52,
+  prev_injuries 1.67 → 1.76; all CIs still above 1.
+- **Decision (Yousuf):** keep all 620 players; conclusions unchanged.
+- **Comment (Zack):** with a binary response, large positive residuals for
+  injured low-risk players are expected rather than a sign of misfit, and
+  removing only injured low-risk players is bound to strengthen the ORs, so
+  the refit is a weak check. A binned residual plot (residuals averaged within
+  bins of fitted probability) would be the better check for 05a; Liha's 05b
+  already covers grouped goodness of fit.
+
+**Part 2 = position × injury (week 8 contingency tables, planned `08a`):**
+- 4 × 2 table: Pearson X² = 4.38 on 3 df, p = 0.22. No evidence that injury
+  rate differs by position, consistent with 04a/04b (position dropped,
+  p = 0.43).
+- Grouped logistic `~ position` and log-linear `Freq ~ position*injured`
+  compared (same test).
+- Three-way table with previous-injury band (0, 1, 2+): three-way term LRT
+  3.96 on 6 df (p = 0.68), dropped; position:injured then LRT 4.06 on 3 df
+  (p = 0.25), dropped; prev_band:injured LRT 30.2 on 2 df (p < 0.001), kept.
+  position:prev_band (p = 0.014) is part of the explanatory margin and stays
+  in either way (slide 40).
+- Marginal position ORs v GK: DEF 0.49 (0.26–0.98), MID 0.62 (0.32–1.21),
+  FWD 0.60 (0.30–1.22), plus within-band (partial) ORs. Only the DEF interval
+  excludes 1, and the overall 3-df test is p = 0.22, so this is not evidence
+  of a position effect on its own.
+
+**To do (Yousuf):** rename to `05a_injury_diagnostics.R` (Part 1) and
+`08a_position_injury_table.R` (Part 2), with `source("code/00_load_data.R")`
+at the top and `players` in place of `league_players`; create
+`injury_counts` before it's used; delete the duplicate `write.csv` of
+`injury_unusual_players.csv`; run each from a fresh session and commit the
+outputs. Keep this file in `code/drafts/` as the original.
+
+### 19/11/2026 — Weeks 6–8 workspace check (Zack)
+- All 21 numbered scripts run from a fresh session with `source("run_all.R")`
+  (R 4.3.3; `01b` and `04b` need the tidyverse, as before). `05c` now
+  passes on its own.
+- Re-running reproduces the committed outputs (differences only in line
+  endings and the last decimal place). Regenerated outputs not committed.
+- `05c`'s committed `win_influence_comparison.csv` is out of date (Wald
+  CIs; see Vish's 07–08/11 entry).
+- `code/Week4 and Week5.R` fails (see Yousuf's entry above) and isn't run by
+  `run_all.R`.
+- Open from earlier checks: Yousuf to review the [Zack] section of 04a and
+  the 04a entry, and fix the date on his week 4 row; Liha to check her 05b row
+  and fix the date on her week 4 row. goals_conceded still not modelled.
+
+### 19/11/2026 — Week 9 plan: ordinal and matched-pairs models
+From the week 9 lecture (proportional odds, matched pairs, Bradley–Terry):
+- **Result (L < D < W) is ordinal.** 06e treated it as nominal and 04e
+  collapsed it to win/not win. A proportional-odds model (`MASS::polr`) uses
+  the ordering with one venue and one rank coefficient. Check the
+  proportional-odds assumption with the cumulative-logit differences
+  (slides 11–13) and against a multinomial fit (`nnet::multinom`).
+- **The match data are matched pairs.** Ashford play each of the 23 opponents
+  once at home and once away (checked: every opponent_rank appears exactly
+  twice, once each venue). So home v away can be compared within opponent:
+  McNemar's test (win at home v win away), the 3 × 3 home-result × away-result
+  square table (symmetry, quasi-symmetry, marginal homogeneity), and
+  conditional logistic regression with opponent as the stratum
+  (`survival::clogit`). This addresses the "paired by opponent" caveat in
+  04e, 05e, 06b and 06e directly.
+- **Bradley–Terry:** considered for the record. We only have Ashford's
+  fixtures, not the whole league, so every "contest" involves Ashford. A BT
+  model would then just be a logistic model for Ashford winning with one
+  parameter per opponent (23, each from two matches), and the basic model
+  doesn't allow draws (11 of 46 matches). Its home-advantage version (order
+  effect δ) is in effect the venue term in 04e, with opponent_rank standing in
+  for opponent ability. Liri to confirm and write the decision.
+- Owners are in `notes/project-status.md`.

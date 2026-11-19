@@ -118,7 +118,7 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 |---|---|
 | `win_diagnostics.png` | The four standard residual plots for the win model |
 | `win_cooks.png` | Cook's distance for each match |
-| `win_influence_comparison.csv` | Odds ratios and 95% Wald CIs with and without match 27 (the largest Cook's distance) |
+| `win_influence_comparison.csv` | Odds ratios and 95% CIs with and without match 27 (the largest Cook's distance). The code now gives profile-likelihood CIs (08/11); the committed copy still has the older Wald CIs until `05c` is re-run |
 
 **`05d_grouped_diagnostics.R`** (Liri)
 | File | Contents |
@@ -128,6 +128,13 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 | `position_load_cell_diagnostics.csv` | Observed and fitted rates plus residual, leverage and influence diagnostics for the 20 position × training-load cells |
 | `position_load_diagnostics.png` | Residual-v-fitted, QQ, leverage and Cook's-distance plots for the grouped cell model |
 | `position_load_influence_comparison.csv` | Coefficients, odds ratios and 95% Wald CIs with and without the cell having the largest Cook's distance |
+
+**`05d_minutes_diagnostics.R`** (Vish)
+| File | Contents |
+|---|---|
+| `lm1_diagnostics_ceiling.png` | The four residual plots for the minutes linear model, with the 16 players at the 3960-minute ceiling highlighted |
+| `lm1_leverage_cooks.png` | Leverage (with the p/n line) and Cook's distance index plots for the minutes model |
+| `lm1_ceiling_sensitivity.csv` | Coefficients and 95% CIs with and without the 16 ceiling players |
 
 **`05e_goals_influence.R`** (Zack)
 | File | Contents |
@@ -144,6 +151,11 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 | `goals_poisson_vs_quasi.csv` | Standard errors under Poisson and quasipoisson |
 
 ## Week 6
+
+**`06b_goals_scored_selection.R`** (Zack)
+| File | Contents |
+|---|---|
+| `goals_scored_model_selection.csv` | Poisson model selection for goals scored (interaction, linear v log rank, drop1 LRTs), for all 46 matches and without the 8–0 |
 
 **`06d_injury_loglinear.R`** (Liri)
 | File | Contents |
@@ -168,3 +180,24 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 | `venue_result_loglinear_selection.csv` | Log-linear model selection for the three-way table |
 | `venue_result_marginal_vs_conditional_or.csv` | Venue-result odds ratios: marginal v conditional on rank band |
 | `venue_result_by_rank.png` | Result proportions by venue, overall and within rank bands |
+
+## Week 8 — Contingency tables I
+
+**`08d_age_prev_injury_table.R`** (Zack)
+| File | Contents |
+|---|---|
+| `table_age_prev_injury.csv` | Age band × previous-injury band cells: n, injured, proportion, fitted injured count and Pearson residual from the final model |
+| `age_prev_loglinear_vs_logistic.csv` | Log-linear injury interactions v grouped logistic coefficients (identical), with odds ratios and 95% CIs |
+
+## Not yet produced by a numbered script
+
+`code/Week4 and Week5.R` (Yousuf, uploaded 09/11) is written to save the files
+below, but it does not run yet (see `notes/decision-notes.md`, 19/11/2026) and
+is not picked up by `run_all.R` (its name doesn't start with a number), so none
+of them are in this folder yet:
+`injury_final_residuals.png`, `injury_final_cooks.png`,
+`injury_unusual_players.csv`, `injury_high_leverage.csv`,
+`injury_top5_influential.csv`, `injury_influence_comparison.csv`,
+`table_position_injured.csv`, `expected_counts_position_injured.csv`,
+`table_position_injured_by_prev_band.csv`, `marginal_position_odds_ratios.csv`,
+`partial_position_odds_ratios.csv`.
