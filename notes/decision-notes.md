@@ -926,7 +926,7 @@ as the grouped logistic model?
   training_load not included.
 
 ### 09/11/2026 — Final injury model diagnostics and position × injury (Yousuf, `code/Week4 and Week5.R`) *(written up by Zack from the script; Yousuf to check)*
-**Status:** the script doesn't run from a fresh session. It uses
+**Status (updated 22/11/2026):** done; now `05a` and `08a`, see the 22/11 entry below. Original status: the script doesn't run from a fresh session. It uses
 `league_players`, but `00_load_data.R` creates `players`, and the grouped
 logistic model in section 3 uses `injury_counts`, which is never created. Its
 name doesn't start with a number, so `run_all.R` skips it, and none of its
@@ -972,6 +972,30 @@ at the top and `players` in place of `league_players`; create
 `injury_counts` before it's used; delete the duplicate `write.csv` of
 `injury_unusual_players.csv`; run each from a fresh session and commit the
 outputs. Keep this file in `code/drafts/` as the original.
+
+### 22/11/2026 — 05a and 08a now run (Yousuf)
+**What:** split `code/Week4 and Week5.R` into `05a_injury_diagnostics.R`
+(Part 1) and `08a_position_injury_table.R` (Part 2). Both source
+`00_load_data.R` and use `players`; `08a` now creates `injury_counts`
+(injured and not injured by position) before the grouped logistic model. The
+duplicate `write.csv` and repeated model fits were removed; the analysis is
+otherwise unchanged. The original is kept in `code/drafts/`. Both scripts run
+from a fresh session and in `run_all.R`, and every number in the 09/11 entry
+above is reproduced. Outputs committed (listed in `outputs/README.md`).
+
+**New in 05a, binned residual plot:** response residuals (injured − fitted
+probability) averaged within 24 bins of fitted probability (about √620 ≈ 25
+bins cut at quantiles; fewer because of tied fitted values, 21–30 players per
+bin), with ±2 SE bands, SE = √(p̄(1 − p̄)/n_bin).
+- 2 of 24 bins (8%) lie outside ±2 SE, both at fitted probability < 0.10 and
+  both positive; about 1 in 20 is expected by chance.
+- No systematic pattern: bin averages fall either side of 0 across the range.
+- **Decision:** no evidence of lack of fit for the final model, in agreement
+  with Liha's grouped goodness of fit (05b). This replaces the
+  \|residual\| > 2 list as the main fit check; the influence refit is kept
+  as a sensitivity check, with the caveat in Zack's comment above.
+
+**Outputs:** `injury_binned_residuals.png`, `injury_binned_residuals.csv`.
 
 ### 19/11/2026 — Weeks 6–8 workspace check (Zack)
 - All 21 numbered scripts run from a fresh session with `source("run_all.R")`

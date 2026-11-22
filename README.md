@@ -42,6 +42,7 @@ All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selecti
 | `04c_injury_extensions.R` | 4 | age², interactions, exposure, link functions |
 | `04d_grouped_binomial.R` | 4 | Grouped binomial, goodness of fit, team effect |
 | `04e_ashford_wins_and_predictions.R` | 4 | Ashford win model, predicted-probability plots |
+| `05a_injury_diagnostics.R` | 5 | Player-level diagnostics for the final injury model: residuals, leverage, Cook's distance, refit without the five most influential players, binned residual plot (Yousuf) |
 | `05b_injury_grouped_gof.R` | 5 | Grouped goodness of fit for the final injury model (Liha) |
 | `05c_win_diagnostics.R` | 5 | Residuals, leverage and Cook's distance for the Ashford win model (Vish) |
 | `05d_grouped_diagnostics.R` | 5 | Residuals, leverage and influence for the grouped binomial models, by team and by position × training load (Liri) |
@@ -50,8 +51,8 @@ All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selecti
 | `06b_goals_scored_selection.R` | 6 | Poisson model selection for goals scored |
 | `06d_injury_loglinear.R` | 6 | Previous injuries × training load × injury table and log-linear models (Liri) |
 | `06e_venue_result_table.R` | 6 | Home/away × result contingency table and log-linear models |
+| `08a_position_injury_table.R` | 8 | Position × injury table: chi-squared test, grouped logistic v log-linear, three-way table with previous-injury band, marginal v partial ORs (Yousuf) |
 | `08d_age_prev_injury_table.R` | 8 | Age band × previous injuries × injury: log-linear v logistic |
-| `Week4 and Week5.R` | 5, 8 | Yousuf's injury-model diagnostics and position × injury table (09/11). Not run by `run_all.R` and doesn't run yet; to be split into `05a` and `08a` |
 | `drafts/` | 2 | Superseded drafts, kept but not run |
 | `run_all.R` (project root) | — | Runs all scripts in order and reports failures |
 
@@ -59,9 +60,9 @@ All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selecti
 - [x] Week 2 — Exploration + normal linear regression
 - [x] Week 3 — Responses vs explanatory variables
 - [x] Week 4 — Binomial regression
-- [x] Week 5 — Residuals and diagnostics (05b, 05c, both 05d, 05e done; 05a written by Yousuf, not running yet)
+- [x] Week 5 — Residuals and diagnostics (05a, 05b, 05c, both 05d, 05e done)
 - [ ] Week 6 — Poisson regression (goals scored done in 05e/06b; goals conceded still open). 06d and 06e contingency tables done
-- [x] Week 8 — Contingency tables I (06d, 06e, 08d; 08a written by Yousuf, not running yet)
+- [x] Week 8 — Contingency tables I (06d, 06e, 08a, 08d)
 - [ ] Week 9 — Ordinal (proportional-odds) and matched-pairs models (09a–09d, owners in `notes/project-status.md`)
 - [ ] Week 10 — Specialised models
 - [ ] Week 11 — GLMMs

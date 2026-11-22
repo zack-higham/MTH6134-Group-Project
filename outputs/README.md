@@ -104,6 +104,18 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 
 ## Week 5 — Residuals and diagnostics
 
+**`05a_injury_diagnostics.R`** (Yousuf)
+| File | Contents |
+|---|---|
+| `injury_final_residuals.png` | Final injury model: standardised deviance and Pearson residuals v fitted, normal Q-Q plot |
+| `injury_unusual_players.csv` | The 26 players with \|standardised deviance residual\| > 2, with predictors and fitted probability |
+| `injury_high_leverage.csv` | The 54 players with leverage above 2p/n, highest first |
+| `injury_final_cooks.png` | Cook's distance for every player |
+| `injury_top5_influential.csv` | The five players with the largest Cook's distance |
+| `injury_influence_comparison.csv` | Odds ratios and 95% CIs with all 620 players v without the five most influential |
+| `injury_binned_residuals.csv` | Binned residuals: players, average fitted probability, observed rate, average residual and SE per bin |
+| `injury_binned_residuals.png` | Binned residual plot with ±2 SE bands |
+
 **`05b_injury_grouped_gof.R`** (Liha)
 | File | Contents |
 |---|---|
@@ -183,21 +195,17 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 
 ## Week 8 — Contingency tables I
 
+**`08a_position_injury_table.R`** (Yousuf)
+| File | Contents |
+|---|---|
+| `table_position_injured.csv` | Position × injured counts |
+| `expected_counts_position_injured.csv` | Expected counts under independence (chi-squared test) |
+| `table_position_injured_by_prev_band.csv` | Position × previous-injury band (0, 1, 2+) × injured counts |
+| `marginal_position_odds_ratios.csv` | Position odds ratios v GK ignoring previous injuries, with 95% CIs |
+| `partial_position_odds_ratios.csv` | Position odds ratios v GK within each previous-injury band, with 95% CIs |
+
 **`08d_age_prev_injury_table.R`** (Zack)
 | File | Contents |
 |---|---|
 | `table_age_prev_injury.csv` | Age band × previous-injury band cells: n, injured, proportion, fitted injured count and Pearson residual from the final model |
 | `age_prev_loglinear_vs_logistic.csv` | Log-linear injury interactions v grouped logistic coefficients (identical), with odds ratios and 95% CIs |
-
-## Not yet produced by a numbered script
-
-`code/Week4 and Week5.R` (Yousuf, uploaded 09/11) is written to save the files
-below, but it does not run yet (see `notes/decision-notes.md`, 19/11/2026) and
-is not picked up by `run_all.R` (its name doesn't start with a number), so none
-of them are in this folder yet:
-`injury_final_residuals.png`, `injury_final_cooks.png`,
-`injury_unusual_players.csv`, `injury_high_leverage.csv`,
-`injury_top5_influential.csv`, `injury_influence_comparison.csv`,
-`table_position_injured.csv`, `expected_counts_position_injured.csv`,
-`table_position_injured_by_prev_band.csv`, `marginal_position_odds_ratios.csv`,
-`partial_position_odds_ratios.csv`.
