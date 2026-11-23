@@ -67,3 +67,9 @@ Members: Yousuf, Liha, Vish, Liri, Zack
 | 09/11/2026 | Yousuf | Position × injury table: chi-squared test and expected counts, grouped logistic v log-linear model, three-way table with previous-injury band (log-linear selection), marginal v partial (within-band) position odds ratios. Script doesn't run yet and outputs not committed *(row added by Zack from the commit history, 19/11; Yousuf to check)* | `code/Week4 and Week5.R` (sections 2–6; now `code/drafts/`) |
 | 22/11/2026 | Yousuf | Got `08a` running: split Part 2 of my 09/11 script into `08a_position_injury_table.R` (data loader, `players` not `league_players`, `injury_counts` now created before the grouped logistic model, repeated fits removed); ran from a fresh session and committed the outputs. Results unchanged from the 09/11 write-up | `code/08a_position_injury_table.R`, `outputs/table_position_injured*.csv`, `outputs/expected_counts_position_injured.csv`, `outputs/marginal_position_odds_ratios.csv`, `outputs/partial_position_odds_ratios.csv` |
 | 19/11/2026 | Zack | Workspace upkeep for weeks 6–8: added the rows above for 06/11–09/11 (others' rows from the commit history, for owners to check); wrote up 05d (Vish), 06b, 08d and Yousuf's 09/11 script in decision notes; updated README, outputs README and project status; ran all scripts from a fresh session; drafted the week 9 task list | `notes/`, `README.md`, `outputs/README.md` |
+
+## Week 9 — Ordinal and matched-pairs models
+
+| Date | Member | Work done | Files |
+|---|---|---|---|
+| 23/11/2026 | Liri | Paired comparison of Ashford's home and away goals within opponent: opponent-fixed-effect Poisson model, equivalent conditional binomial model, complete-pair sensitivity excluding the opponent involved in the 8–0, fit checks and Bradley–Terry decision | `code/09d_goals_paired.R`, `outputs/goals_paired_*`, `notes/decision-notes.md` |

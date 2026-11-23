@@ -209,3 +209,14 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 |---|---|
 | `table_age_prev_injury.csv` | Age band × previous-injury band cells: n, injured, proportion, fitted injured count and Pearson residual from the final model |
 | `age_prev_loglinear_vs_logistic.csv` | Log-linear injury interactions v grouped logistic coefficients (identical), with odds ratios and 95% CIs |
+
+## Week 9 — Ordinal and matched-pairs models
+
+**`09d_goals_paired.R`** (Liri)
+| File | Contents |
+|---|---|
+| `goals_paired_by_opponent.csv` | Home and away goals for each of the 23 opponent pairs, totals and within-pair differences |
+| `goals_paired_results.csv` | Paired away/home rate ratios with 95% CIs and LRTs, including the 8–0 sensitivity and comparison with 05e/06b |
+| `goals_paired_model_equivalence.csv` | Identical estimates from the opponent-fixed-effect Poisson and conditional-binomial formulations |
+| `goals_paired_fit_checks.csv` | Deviance, residual df, rough GOF p-value, Pearson dispersion and AIC for the paired fits |
+| `goals_paired_home_vs_away.png` | Home goals against away goals within opponent, with the equality line |

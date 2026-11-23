@@ -1,0 +1,5 @@
+"analysis","n_matches","complete_pairs","away_home_RR","lower_95","upper_95","LRT","df","p_value"
+"Paired, all 23 opponents",46,23,0.5,0.286679,0.844365,6.795961,1,0.009136
+"Paired, excluding rank-24 pair containing 8-0",44,22,0.53125,0.288529,0.943912,4.666386,1,0.030759
+"Rank-adjusted 05e/06b model, all 46 matches",46,23,0.5,0.286679,0.844365,NA,NA,NA
+"Rank-adjusted 05e/06b model, excluding only 8-0",45,22,0.58633,0.329905,1.017165,NA,NA,NA

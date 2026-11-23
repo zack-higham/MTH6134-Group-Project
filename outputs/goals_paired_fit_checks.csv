@@ -1,0 +1,3 @@
+"analysis","residual_deviance","residual_df","rough_gof_p","pearson_phi","AIC"
+"All 23 opponent pairs",20.175819,22,0.572043,0.729855,145.823949
+"Without rank-24 opponent pair",19.947115,21,0.524613,0.739532,136.665257

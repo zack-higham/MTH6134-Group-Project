@@ -1034,3 +1034,45 @@ From the week 9 lecture (proportional odds, matched pairs, Bradley–Terry):
   effect δ) is in effect the venue term in 04e, with opponent_rank standing in
   for opponent ability. Liri to confirm and write the decision.
 - Owners are in `notes/project-status.md`.
+
+### 23/11/2026 — Paired goals within opponent (`09d`, Liri)
+
+**Question.** Does Ashford score at a different rate away than at home when
+the same opponent is compared? Every opponent has one home and one away
+fixture, giving 23 matched pairs.
+
+**Model choice.** We fitted a Poisson log-linear model with venue and a
+separate fixed intercept for each opponent. The venue coefficient is therefore
+estimated within opponents rather than by assuming opponent rank has a linear
+effect. Conditional on each pair's total goals, the equivalent model is an
+intercept-only grouped binomial model for away goals versus home goals.
+
+**Results.** Ashford scored 40 goals at home and 20 away. The paired
+away/home rate ratio was **0.500** (95% profile CI **0.287–0.844**); the venue
+LRT was **6.796 on 1 df, p = 0.0091**. The Poisson and conditional-binomial
+log estimates were identical (-0.693147). Model deviance was 20.176 on 22 df
+(rough GOF p = 0.572) and Pearson dispersion was 0.730; there was no evidence
+of overdispersion, with the caveat that these are sparse goal counts.
+
+**8–0 sensitivity.** A matched analysis requires both fixtures, so the
+opponent pair containing the 8–0 was omitted as a pair. Across the remaining
+22 pairs, the away/home rate ratio was **0.531** (95% CI **0.289–0.944**),
+with **LRT = 4.666 on 1 df, p = 0.0308**. The away disadvantage therefore
+remains in the paired sensitivity analysis. The earlier 05e/06b sensitivity
+that removes only the 8–0 match and assumes a linear rank effect gives RR
+0.586 (0.330–1.017); it is not a complete-pair comparison.
+
+**Bradley–Terry decision.** We did not use a Bradley–Terry model. Only
+Ashford's fixtures are observed, so every contest contains Ashford and the
+data cannot estimate a full network of league-wide relative strengths. The
+basic model also excludes the 11 draws unless extended. Its home/order effect
+would duplicate the venue comparison, whereas the paired Poisson model uses
+the goal counts directly, retains all result types and controls for opponent.
+
+**Decision.** Use the paired Poisson result as the within-opponent check for
+the goals question, report the complete-pair 8–0 sensitivity alongside it,
+and describe venue as associated with scoring rather than causal.
+
+**Outputs:** `goals_paired_by_opponent.csv`, `goals_paired_results.csv`,
+`goals_paired_model_equivalence.csv`, `goals_paired_fit_checks.csv`, and
+`goals_paired_home_vs_away.png`.

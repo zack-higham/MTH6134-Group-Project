@@ -53,6 +53,7 @@ All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selecti
 | `06e_venue_result_table.R` | 6 | Home/away × result contingency table and log-linear models |
 | `08a_position_injury_table.R` | 8 | Position × injury table: chi-squared test, grouped logistic v log-linear, three-way table with previous-injury band, marginal v partial ORs (Yousuf) |
 | `08d_age_prev_injury_table.R` | 8 | Age band × previous injuries × injury: log-linear v logistic |
+| `09d_goals_paired.R` | 9 | Home v away goals within opponent pairs, 8–0 sensitivity and Bradley–Terry decision (Liri) |
 | `drafts/` | 2 | Superseded drafts, kept but not run |
 | `run_all.R` (project root) | — | Runs all scripts in order and reports failures |
 
