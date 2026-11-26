@@ -1,0 +1,4 @@
+"test","LRT","df","p_value"
+"drop home_away from main effects",7.625,1,0.00576
+"drop opponent_rank from main effects",6.943,1,0.00841
+"add home_away:opponent_rank",0.275,1,0.6

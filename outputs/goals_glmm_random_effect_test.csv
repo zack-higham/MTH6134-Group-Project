@@ -1,0 +1,9 @@
+"quantity","value"
+"opponent variance (AGQ)",0.1084
+"opponent SD (AGQ)",0.3292
+"logLik GLM",-63.7163
+"marginal logLik GLMM (AGQ, by integration)",-63.1448
+"LRT GLMM v GLM",1.143
+"p-value (halved, boundary)",0.1425
+"LRT using Laplace fit (check)",1.2072
+"naive lme4 logLik with nAGQ = 25 (do not use)",-24.3208

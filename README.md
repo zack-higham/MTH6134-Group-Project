@@ -23,7 +23,7 @@ Analysis of the fictional Midland Premier League 2023/24 season.
 2. Restart R, then run `source("run_all.R")`. It runs every script in `code/` in numerical order, clears the global environment before each one (so a script that forgets to load the data fails instead of borrowing the previous script's), and lists any that fail.
 3. Or run scripts one at a time in numerical order. Every script starts with `source("code/00_load_data.R")`.
 
-All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selection.R`, which load the tidyverse (`install.packages("tidyverse")` once before running them). From week 9, scripts also use `MASS`, `nnet` and `survival`, which come with R.
+All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selection.R`, which load the tidyverse (`install.packages("tidyverse")` once before running them). From week 9, scripts also use `MASS`, `nnet` and `survival`, which come with R. The week 11 GLMM scripts (`11a`, `11b`) use **`lme4`**, which does not: run `install.packages("lme4")` once before `run_all.R`.
 
 `run_all.R` runs every numbered script directly in `code/`. Superseded drafts are kept in `code/drafts/` (Vish's original week 2 file and the old starter) and are not run.
 
@@ -53,7 +53,10 @@ All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selecti
 | `06e_venue_result_table.R` | 6 | Home/away × result contingency table and log-linear models |
 | `08a_position_injury_table.R` | 8 | Position × injury table: chi-squared test, grouped logistic v log-linear, three-way table with previous-injury band, marginal v partial ORs (Yousuf) |
 | `08d_age_prev_injury_table.R` | 8 | Age band × previous injuries × injury: log-linear v logistic |
+| `09a_result_ordinal.R` | 9 | Proportional-odds model for result (L < D < W): selection, cumulative ORs, proportional-odds checks, fitted probabilities (Zack) |
+| `09c_win_conditional_logistic.R` | 9 | Conditional logistic regression for win, opponent as stratum (Vish) |
 | `09d_goals_paired.R` | 9 | Home v away goals within opponent pairs, 8–0 sensitivity and Bradley–Terry decision (Liri) |
+| `11b_goals_opponent_glmm.R` | 11 | Poisson GLMM for goals scored with a random opponent effect; boundary LRT v the GLM; comparison with 06b and 09d (Zack) |
 | `drafts/` | 2 | Superseded drafts, kept but not run |
 | `run_all.R` (project root) | — | Runs all scripts in order and reports failures |
 
@@ -64,7 +67,7 @@ All code is base R, except `01b_explore_matches.R` and `04b_injury_model_selecti
 - [x] Week 5 — Residuals and diagnostics (05a, 05b, 05c, both 05d, 05e done)
 - [ ] Week 6 — Poisson regression (goals scored done in 05e/06b; goals conceded still open). 06d and 06e contingency tables done
 - [x] Week 8 — Contingency tables I (06d, 06e, 08a, 08d)
-- [ ] Week 9 — Ordinal (proportional-odds) and matched-pairs models (09a–09d, owners in `notes/project-status.md`)
-- [ ] Week 10 — Specialised models
-- [ ] Week 11 — GLMMs
-- [ ] Week 12 — Choose three analyses and plan the report
+- [ ] Week 9 — Ordinal (proportional-odds) and matched-pairs models: 09a, 09c, 09d done; 09b (McNemar, square table) still open
+- [ ] Week 10 — Specialised models: censored minutes model (`10b`) proposed to drop, as minutes isn't one of the three proposed questions (group to confirm and log)
+- [ ] Week 11 — GLMMs: 11b done; 11a (injury, random team effect) still open
+- [ ] Week 12 — Confirm the three questions and plan the report (proposed plan in `notes/project-status.md`)

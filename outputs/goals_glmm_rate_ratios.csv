@@ -1,0 +1,6 @@
+"model","term","RR","lower_95","upper_95"
+"06b GLM","Away v Home",0.5,0.287,0.844
+"06b GLM","opponent_rank (per place)",1.056,1.017,1.098
+"11b GLMM (1 | opponent)","Away v Home",0.5,0.287,0.844
+"11b GLMM (1 | opponent)","opponent_rank (per place)",1.052,1.006,1.099
+"09d paired, opponent fixed effects","Away v Home",0.5,0.287,0.844

@@ -1076,3 +1076,123 @@ and describe venue as associated with scoring rather than causal.
 **Outputs:** `goals_paired_by_opponent.csv`, `goals_paired_results.csv`,
 `goals_paired_model_equivalence.csv`, `goals_paired_fit_checks.csv`, and
 `goals_paired_home_vs_away.png`.
+
+### 26/11/2026 — Ashford results: proportional-odds model (Zack, `09a`)
+
+**Question (report Q3).** How do venue and opponent strength shift Ashford's
+chances of losing, drawing and winning? `result` is ordered (L < D < W), so a
+proportional-odds model uses the ordering with one coefficient per term.
+06e treated it as nominal (two ORs per term) and 04e collapsed it to win /
+not win.
+
+**Sign convention.** `MASS::polr` fits logit P(result ≤ j) = ζj − η. A
+positive coefficient moves results towards W, and exp(β) is the odds ratio
+for a *better* result (W v D or L, and equally D or W v L).
+
+**Model selection** (`result_ordinal_selection.csv`, `result_ordinal_lrt.csv`):
+
+| Model | Deviance | AIC |
+|---|---|---|
+| 1 | 96.79 | 100.79 |
+| home_away | 89.82 | 95.82 |
+| opponent_rank | 90.50 | 96.50 |
+| **home_away + opponent_rank** | **82.87** | **90.87** |
+| home_away × opponent_rank | 82.60 | 92.60 |
+| home_away + log(opponent_rank) | 83.14 | 91.14 |
+
+- Drop home_away: LRT 7.63 on 1 df, p = 0.006. Drop opponent_rank: LRT 6.94
+  on 1 df, p = 0.008. Add interaction: LRT 0.28 on 1 df, p = 0.60.
+- **Decision:** keep both main effects; no interaction (no evidence that the
+  venue effect depends on opponent strength); linear rank, as in 06b.
+
+**Results** (95% profile CIs, `result_ordinal_odds_ratios.csv`):
+- Away v home: OR 0.190 (0.052–0.625). For a given opponent rank, the odds of
+  a better result away are about a fifth of those at home (odds of a worse
+  result about 5.3 times higher, CI 1.6–19).
+- Opponent rank: OR 1.125 (1.030–1.240) per place further down the table
+  (about 3.2 times for 10 places).
+- Fitted probabilities (`result_ordinal_predicted_probs.csv`): v rank 12,
+  P(W) 0.64 home v 0.26 away, P(L) 0.13 v 0.44, P(D) 0.23 v 0.30. v rank 1:
+  P(W) 0.33 v 0.09. v rank 24: P(W) 0.88 v 0.59.
+
+**Proportional-odds check** (all three agree, no evidence against it):
+- Empirical cumulative logits: home − away difference −1.63 at L|D and −1.46
+  at D|W (model: −1.66). By rank band the two cut points move in the same
+  direction (band 1–8 to 17–24: 1.95 and 1.02), with 14–16 matches per band.
+- Separate binary logits at each cut: away −2.01 and −1.59, rank 0.163 and
+  0.088; differences about one SE or less.
+- LRT v `nnet::multinom` (2 extra parameters): 1.76 on 2 df, p = 0.42;
+  multinomial AIC 93.11 v 90.87.
+
+**Fit and influence:**
+- Observed v fitted L/D/W counts in 6 venue × rank-band groups: X² = 4.65 on
+  about 8 df, p = 0.79 (small expected counts, so rough).
+- Links: logit 90.87, probit 90.42, cloglog 92.10, loglog 89.44 (AIC). Not
+  distinguishable; logit kept for ORs.
+- Leave-one-out: away OR stays in 0.15–0.21, rank OR in 1.11–1.15. Most
+  influential is match 15 (home 0–1 v rank 11). The 8–0 has almost no
+  influence (away OR 0.197 without it), because an ordinal model counts it as
+  one win. Contrast with the goals model (05e, Cook's 0.64).
+
+**Comparison across Q3 analyses** (`result_away_or_comparison.csv`): away OR
+0.190 (09a) v 0.205 (0.050–0.723, 04e win model) v 0.273 (0.076–0.978, 09c
+conditional logistic). Consistent. polr is the most precise because it also
+uses the L v D distinction; 09c is wider (14 discordant pairs) but doesn't
+assume a linear rank effect. 09b (Liha) to be added when committed.
+
+**Decision:** `09a` is the main model for Q3 in the report (Figure 3:
+`result_ordinal_fitted_probs.png`; Table 3: `result_away_or_comparison.csv`).
+Report as associations, not causes.
+
+### 26/11/2026 — Goals scored: GLMM with a random opponent effect (Zack, `11b`)
+
+**Why.** Each opponent is played twice, so the two matches may be correlated
+beyond opponent_rank. Model: `glmer(goals_scored ~ home_away + opponent_rank
++ (1 | opponent), family = poisson, nAGQ = 25)`. AGQ rather than Laplace
+because there are only 2 observations per opponent.
+
+**Problem found and fixed.** With `nAGQ > 1`, `lme4` reports a Poisson
+log-likelihood without the −Σ log(y!) constant, so it is not comparable with
+`glm()`. Comparing them directly gave logLik −24.3 v −63.7 and a meaningless
+"LRT" of 78.8. The script computes the GLMM's marginal log-likelihood by
+numerical integration over each opponent's random effect, on the glm scale
+(−63.145), and cross-checks against the Laplace fit (LRT 1.21).
+
+**Results** (`goals_glmm_random_effect_test.csv`, `goals_glmm_rate_ratios.csv`):
+- Opponent variance 0.108 (SD 0.33). LRT v GLM 1.14 on 1 df; variance on the
+  boundary, so p halved: **p = 0.14**. No evidence the random effect is
+  needed.
+- Away RR 0.500 (0.287–0.844), identical in the GLM (06b), the GLMM, and
+  Liri's fixed-opponent paired model (09d). Expected: each opponent has one
+  home and one away match, so venue is balanced within opponent.
+- Rank RR 1.052 (1.006–1.099) in the GLMM v 1.056 (1.017–1.098) in the GLM.
+- Without the 8–0 the variance is estimated as 0 (singular fit) and the GLMM
+  equals the GLM (away 0.586, rank 1.034). The non-zero variance comes from
+  the rank-24 pair (8–0 and 3–1, 11 goals v 4.5 expected); its predicted
+  effect is u = 1.08, next largest about ±0.5.
+- Pearson dispersion 0.70; no |residual| > 2 (`goals_glmm_diagnostics.png`).
+
+**Decision:** keep the 06b GLM as the main goals-scored model. In the report,
+one sentence: allowing for opponent (GLMM or 09d's paired model) leaves the
+away RR at 0.50. **Alternative considered:** a GLMM for goals conceded, not
+done here because goals conceded (06a) is Liha's and not yet modelled.
+
+### 26/11/2026 — Week 9–11 workspace check (Zack)
+- All 27 numbered scripts (incl. new `09a`, `11b`) run from a fresh session
+  with `source("run_all.R")` (R 4.3.3; `lme4` installed). Regenerated
+  outputs from others' scripts not committed.
+- Re-running reproduces the committed outputs to rounding, except:
+  - **`05c` (Vish):** committed `win_influence_comparison.csv` still has the
+    old Wald CIs and no 8–0 column. Vish's current code (22/11) produces
+    profile CIs plus a "No_Match8" column (e.g. away 0.205, 0.050–0.723).
+    **Vish to re-run 05c and commit the output.**
+  - **`05d_grouped_diagnostics` (Liri):** the `std_deviance_residual` column
+    differs from the committed file (Grantwick 3.15 here v 3.54 committed;
+    Pearson standardised 3.46 in both). 3.15 is the textbook
+    d / √(1 − h) (checked by hand); the committed value probably comes from a
+    different R version's `rstandard()`. Conclusion unchanged (Grantwick the
+    only team outside ±2). **Liri to check which R version and which value
+    goes in the report.**
+- Still open: `06a`, `09b` (Liha; no commits since 26/10), `11a` (Liri),
+  Yousuf's review of the [Zack] section in `04a` and week 4 row date, Liha's
+  week 4 row date, Vish's 09c who-did-what row and decision note.

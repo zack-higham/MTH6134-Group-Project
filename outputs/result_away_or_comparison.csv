@@ -1,0 +1,4 @@
+"analysis","OR_away","lower_95","upper_95"
+"09a proportional odds: better result (adj. for rank)",0.19,0.052,0.625
+"04e logistic: win v not win (adj. for rank)",0.205,0.05,0.723
+"09c conditional logistic: win, opponent as stratum",0.273,0.076,0.978

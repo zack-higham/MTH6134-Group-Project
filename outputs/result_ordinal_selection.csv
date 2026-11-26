@@ -1,0 +1,7 @@
+"model","n_par","deviance","AIC","LRT","df","p_value"
+"1",2,96.787,100.79,NA,NA,NA
+"home_away",3,89.816,95.82,NA,NA,NA
+"opponent_rank",3,90.498,96.5,NA,NA,NA
+"home_away + opponent_rank",4,82.873,90.87,NA,NA,NA
+"home_away * opponent_rank",5,82.597,92.6,0.275,1,0.6
+"home_away + log(opponent_rank)",4,83.138,91.14,NA,NA,NA

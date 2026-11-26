@@ -1,0 +1,3 @@
+"model","n_par","deviance","AIC","LRT","df","p_value"
+"polr (proportional odds)",4,82.873,90.87,NA,NA,NA
+"multinom (nominal)",6,81.115,93.11,1.758,2,0.415

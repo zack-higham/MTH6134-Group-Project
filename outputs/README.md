@@ -220,3 +220,32 @@ Every file below is recreated by running `source("run_all.R")` from a fresh R se
 | `goals_paired_model_equivalence.csv` | Identical estimates from the opponent-fixed-effect Poisson and conditional-binomial formulations |
 | `goals_paired_fit_checks.csv` | Deviance, residual df, rough GOF p-value, Pearson dispersion and AIC for the paired fits |
 | `goals_paired_home_vs_away.png` | Home goals against away goals within opponent, with the equality line |
+
+**`09c_win_conditional_logistic.R`** (Vish)
+| File | Contents |
+|---|---|
+| `win_conditional_logistic.csv` | Conditional logistic (opponent as stratum): away v home OR with 95% CI, LRT and score test |
+
+**`09a_result_ordinal.R`** (Zack)
+| File | Contents |
+|---|---|
+| `result_ordinal_selection.csv` | Proportional-odds model selection: deviance and AIC for six models, LRT for the interaction |
+| `result_ordinal_lrt.csv` | LRTs for dropping each main effect and adding the interaction |
+| `result_ordinal_odds_ratios.csv` | Final model: estimates, SEs, cumulative odds ratios (better result) with 95% profile CIs |
+| `result_ordinal_po_check.csv` | Proportional odds v multinomial: deviance, AIC, LRT |
+| `result_ordinal_cut_slopes.csv` | Separate binary-logit slopes at each cut point v the common polr slope |
+| `result_ordinal_obs_vs_fitted.csv` | Observed v fitted L/D/W counts by venue × rank band |
+| `result_ordinal_leave_one_out.csv` | Away and rank ORs with each match left out in turn |
+| `result_ordinal_predicted_probs.csv` | Fitted P(L), P(D), P(W) home and away at ranks 1, 12, 24 |
+| `result_ordinal_fitted_probs.png` | Fitted P(L/D/W) v opponent rank, home and away, with observed band proportions (report Figure 3) |
+| `result_away_or_comparison.csv` | Away v home OR across 09a, 04e and 09c (report Table 3) |
+
+## Week 11 — GLMMs
+
+**`11b_goals_opponent_glmm.R`** (Zack)
+| File | Contents |
+|---|---|
+| `goals_glmm_random_effect_test.csv` | Opponent variance and SD, log-likelihoods, boundary LRT v the GLM (and the Laplace cross-check) |
+| `goals_glmm_rate_ratios.csv` | Away and rank rate ratios with 95% CIs: 06b GLM v GLMM v 09d paired model |
+| `goals_glmm_opponent_effects.csv` | Predicted opponent effects (conditional modes), largest first |
+| `goals_glmm_diagnostics.png` | Pearson residuals v fitted, and Q-Q plot of predicted opponent effects |
